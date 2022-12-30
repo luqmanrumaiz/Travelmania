@@ -93,37 +93,73 @@ class User_model extends CI_Model {
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 		// Generating a unique user id based on a random number and also using entropy for more randomness
-		$userId = uniqid(rand(),true);
-		echo($userId);
-		if ($this->db->insert('user', array('userId' => $userId, 'username' => $username, 'email' => $email, 'password' => $hashed_password, 'destinationId' => 1))) {
-			return True;
-		} else {
-			return False;
+		$userId = uniqid(uniqid(rand(), true));
+
+		try
+		{
+			if ($this->db->insert('user', array('userId' => $userId, 'username' => $username, 'email' => $email,
+				'password' => $hashed_password, 'destinationId' => 1)))
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			if ($e->getCode() == 1062)
+			{
+				echo 'Username or email already exists';
+				return False;
+			}
 		}
 	}
 
-	public function create_($username, $email, $password, $userBio, $userAvatarUrl, $destinationId)
-	{
-		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-		if ($this->db->insert('user', array('username' => $username, 'email' => $email, 'password' => $hashed_password, 'userBio' => $userBio, 'userAvatarUrl' => $userAvatarUrl, 'destinationId' => $destinationId))) {
-			return True;
-		} else {
-			return False;
-		}
-	}
-
-	function authenticate($email, $password)
+	function login($email, $password)
 	{
 		$res = $this->db->get_where('user', array('email' => $email));
+		if ($res->num_rows() < 0)
+		{
+			return array('logged_in' => false);
+		}
+		else
+		{
+			$row = $res->row();
+
+			if (password_verify($password, $row->password))
+			{
+				$this->setUserId($row->userId);
+				$this->setUsername($row->username);
+				$this->setEmail($row->email);
+				$this->setUserBio($row->userBio);
+				$this->setUserAvatarUrl($row->userAvatarUrl);
+				$this->setDestinationId($row->destinationId);
+
+				return array('logged_in' => true, 'user' => $this);
+			}
+			else
+			{
+				return array('logged_in' => false);
+			}
+		}
+	}
+
+	function get_user_data()
+	{
+		$res = $this->db->get_where('user', array('email' => $this->session->userdata('email')));
 		if ($res->num_rows() != 1) {
 			return false;
 		} else {
 			$row = $res->row();
-			if (password_verify($password, $row->password)) {
-				return true;
-			} else {
-				return false;
-			}
+			$this->setUserId($row->userId);
+			$this->setUsername($row->username);
+			$this->setEmail($row->email);
+			$this->setUserBio($row->userBio);
+			$this->setUserAvatarUrl($row->userAvatarUrl);
+			$this->setDestinationId($row->destinationId);
+			return true;
 		}
 	}
 

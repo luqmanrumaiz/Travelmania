@@ -6,4 +6,6 @@ $route['auth'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['again']['get'] = 'again';
+$route['register'] = 'home/register';
+$route['login'] = 'home/login';
+$route['home'] = 'home/home';

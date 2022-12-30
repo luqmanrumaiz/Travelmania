@@ -1,10 +1,54 @@
-*,
-*:before,
-*:after{
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-}
+/*@font-face {*/
+/*	font-family: "Inter Semi Bold";*/
+/*	src: url("../assets/fonts/Inter-SemiBold.ttf");*/
+/*}*/
+
+/**,*/
+/**:before,*/
+/**:after{*/
+/*	padding: 0;*/
+/*	margin: 0;*/
+/*	box-sizing: border-box;*/
+/*	font-family: 'Inter',sans-serif !important;*/
+/*}*/
+
+/*.display-4 {*/
+/*	font-family: 'Inter', sans-serif;*/
+/*}*/
+
+/*.card {*/
+
+/*}*/
+
+/*.card * {*/
+/*	font-family: 'Inter',sans-serif !important;*/
+/*	color: #ffffff !important;*/
+/*	letter-spacing: 0.5px !important;*/
+/*	outline: none !important;*/
+/*	border: none !important;*/
+/*}*/
+
+/*.card-header h4{*/
+/*	font-size: 32px;*/
+/*	font-weight: 500;*/
+/*	line-height: 42px;*/
+/*	text-align: left;*/
+/*}*/
+
+/*.card p{*/
+/*	font-style: normal;*/
+/*	font-weight: 400;*/
+/*	font-size: 16px;*/
+/*	line-height: 19px;*/
+/*	color: #656565 !important;*/
+/*}*/
+
+/*form *{*/
+/*	color: #ffffff;*/
+/*	letter-spacing: 0.5px;*/
+/*	outline: none;*/
+/*	border: none;*/
+/*}*/
 
 body::before {
 	content: "";
@@ -13,80 +57,26 @@ body::before {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+	background-color: rgba(255, 255, 255, 0.8); /* 50% transparent white */
 }
 
 body{
-	background: url("../assets/register_background.jpg") no-repeat center center fixed;
+	background: url("../assets/images/register_background.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	background-color: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+	background-color: rgba(255, 255, 255); /* 50% transparent white */
 }
 
-form{
-	height: 520px;
-	width: 400px;
+.center-content{
 	position: absolute;
-	transform: translate(-50%,-50%);
 	top: 50%;
-	left: 75%;
-	padding: 50px 35px;
-	background: #000000;
-	border-radius: 30px;
-	overflow: scroll;
-}
-form *{
-	font-family: 'Inter',sans-serif;
-	color: #ffffff;
-	letter-spacing: 0.5px;
-	outline: none;
-	border: none;
-}
-form h3{
-	font-size: 32px;
-	font-weight: 500;
-	line-height: 42px;
-	text-align: left;
+	transform: translate(0, -50%);
+	padding: 10px;
 }
 
-form p{
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 19px;
-	color: #656565;
-}
-
-label{
-	display: block;
-	margin-top: 30px;
-	font-size: 16px;
-	font-weight: 500;
-}
-input{
-	display: block;
-	height: 50px;
-	width: 100%;
-	background-color: #2F2F2F;
-	border-radius: 3px;
-	padding: 0 10px;
-	margin-top: 8px;
-	font-size: 14px;
-	font-weight: 300;
-}
-::placeholder{
-	color: #e5e5e5;
-}
-button{
-	margin-top: 100px;
-	width: 100%;
-	background-color: #ffffff;
-	color: #080710;
-	padding: 15px 0;
-	font-size: 18px;
-	font-weight: 600;
-	border-radius: 5px;
-	cursor: pointer;
+.vertical-center {
+	display: flex;
+	align-items: center;
 }
