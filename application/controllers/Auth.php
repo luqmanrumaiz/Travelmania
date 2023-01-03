@@ -11,7 +11,6 @@ class Auth extends CI_Controller
 		$this->load->database();
 		$this->load->model('Auth_model');
 		$this->load->model('User_model');
-		$this->load->library('session');
 		$this->load->helper('url');
 	}
 
@@ -45,11 +44,10 @@ class Auth extends CI_Controller
 
 	public function login()
 	{
-		$this->load->library('session');
 		$method = $_SERVER['REQUEST_METHOD'];
 		if($method != 'POST')
 		{
-			$this->json_output(400,array('status' => 400,'message' => 'Bad wrequest.'));
+			$this->json_output(400,array('status' => 400,'message' => 'Bad request.'));
 		}
 		else
 		{
@@ -62,6 +60,7 @@ class Auth extends CI_Controller
 
 			if ($response['logged_in'])
 			{
+				$_SESSION['logged_in'] = true;
 				$_SESSION['user'] = $response['user'];
 				redirect('home');
 			}
@@ -72,6 +71,12 @@ class Auth extends CI_Controller
 				redirect('login');
 			}
 		}
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 
 	function json_output($statusHeader,$response)

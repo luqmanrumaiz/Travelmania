@@ -137,29 +137,14 @@ class User_model extends CI_Model {
 				$this->setUserAvatarUrl($row->userAvatarUrl);
 				$this->setDestinationId($row->destinationId);
 
-				return array('logged_in' => true, 'user' => $this);
+				return array('logged_in' => true, 'user' => array('userId' => $row->userId, 'username' => $row->username,
+				'email' => $row->email, 'userBio' => $row->userBio, 'userAvatarUrl' => $row->userAvatarUrl,
+				'destinationId' => $row->destinationId));
 			}
 			else
 			{
 				return array('logged_in' => false);
 			}
-		}
-	}
-
-	function get_user_data()
-	{
-		$res = $this->db->get_where('user', array('email' => $this->session->userdata('email')));
-		if ($res->num_rows() != 1) {
-			return false;
-		} else {
-			$row = $res->row();
-			$this->setUserId($row->userId);
-			$this->setUsername($row->username);
-			$this->setEmail($row->email);
-			$this->setUserBio($row->userBio);
-			$this->setUserAvatarUrl($row->userAvatarUrl);
-			$this->setDestinationId($row->destinationId);
-			return true;
 		}
 	}
 
