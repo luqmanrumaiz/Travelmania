@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH . 'libraries/REST_Controller.php';
+use chriskacerguis\RestServer\RestController;
 
-class Auth extends CI_Controller
+class Auth extends RestController
 {
 	public function __construct()
 	{
@@ -14,62 +14,46 @@ class Auth extends CI_Controller
 		$this->load->helper('url');
 	}
 
-	public function register()
+	public function register_post()
 	{
-		$method = $_SERVER['REQUEST_METHOD'];
-		if($method != 'POST')
+		$username = $this->post('username');
+		$email = $this->post('email');
+		$password = $this->post('password');
+
+		if (!$this->User_model->create($username, $email, $password))
 		{
-			$this->json_output(400,array('status' => 400,'message' => 'Bad request.'));
+			// redirect to register again with an error message
+			$status = 'An error occurred while registering';
 		}
 		else
 		{
-			$username = $this->input->post('username');
-			$email = $this->input->post('email');
-			$password = $this->input->post('password');
-
-			if (!$this->User_model->create($username, $email, $password))
-			{
-				// redirect to register again with an error message
-				$status = 'An error occurred while registering';
-			}
-			else
-			{
-				$status = 'Registration successful!';
-			}
-
-			$this->session->set_flashdata('registration_success', $status);
-			redirect('/');
+			$status = 'Registration successful!';
 		}
+
+		$this->session->set_flashdata('registration_success', $status);
+		redirect('/');
 	}
 
-	public function login()
+	public function login_post()
 	{
-		$method = $_SERVER['REQUEST_METHOD'];
-		if($method != 'POST')
+		$email = $this->post('email');
+		$password = $this->post('password');
+
+
+		$response = $this->User_model->login($email, $password);
+		$this->console_log($email);
+
+		if ($response['logged_in'])
 		{
-			$this->json_output(400,array('status' => 400,'message' => 'Bad request.'));
+			$_SESSION['logged_in'] = true;
+			$_SESSION['user'] = $response['user'];
+			redirect('home');
 		}
 		else
 		{
-			$email = $this->input->post('email');
-			$password = $this->input->post('password');
-
-
-			$response = $this->User_model->login($email, $password);
-			$this->console_log($email);
-
-			if ($response['logged_in'])
-			{
-				$_SESSION['logged_in'] = true;
-				$_SESSION['user'] = $response['user'];
-				redirect('home');
-			}
-			else
-			{
-				// Login failed, display an error message
-				$this->session->set_flashdata('registration_success', 'Login failed');
-				redirect('login');
-			}
+			// Login failed, display an error message
+			$this->session->set_flashdata('registration_success', 'Login failed');
+			redirect('login');
 		}
 	}
 

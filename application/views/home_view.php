@@ -76,6 +76,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="col-4 bg-danger rounded h-100">
 						<div class="offcanvas offcanvas-end show position-fixed" data-bs-scroll="true" data-bs-backdrop="static" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
 							<div class="offcanvas-header">
+								<div class="avatar mx-auto" style="width: 128px; height: 128px;">
+									<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle">
+								    <button type="button" class="btn btn-primary btn-edit position-absolute" style="bottom: 0; right: 0; padding: .25rem .5rem;font-size: .875rem;">	
+								</div>
 								<h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
 							</div>
 							<div class="offcanvas-body">
