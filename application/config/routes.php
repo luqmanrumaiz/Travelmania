@@ -5,7 +5,7 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['recomgister'] = 'home/register';
+$route['register'] = 'home/register';
 $route['login'] = 'home/login';
 $route['home'] = 'home/home';
 

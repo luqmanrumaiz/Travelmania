@@ -57,7 +57,7 @@ class Auth extends RestController
 		}
 	}
 
-	public function logout()
+	public function logout_get()
 	{
 		$this->session->sess_destroy();
 		redirect('/');
