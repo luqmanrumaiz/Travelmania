@@ -118,6 +118,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<hr>
 				<div>
 					<h5>Recent Posts</h5>
+					<?php foreach ($posts as $post) : ?>
+						<div class="card bg-dark text-white">
+							<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>" class="card-img" alt="...">
+							<div class="card-img-overlay">
+								<h5 class="card-title"><?php echo $post['postTitle']; ?></h5>
+								<p class="card-text"><?php echo $post['postDesc']; ?></p>
+								<p class="card-text"><?php echo $post['postUploadTime']; ?></p>
+							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 			</div>
 		</div>

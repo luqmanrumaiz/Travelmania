@@ -41,46 +41,27 @@ class Post extends RestController
 		$this->Post_model->setDestinationId(1);
 
 		$this->Post_model->create();
+//		'message' => 'Post creation failed'
 
 		redirect('/');
 	}
-//
-//	function create_post()
-//	{
-//
-//		$postTitle = $this->post('postTitle');
-//		$postDesc = $this->post('postDesc');
-//		$postLikes = $this->post('postLikes');
-//		$postUploadTime = $this->post('postUploadTime');
-//		$isLiked = $this->post('isLiked');
-//		$userId = $this->post('userId');
-//		$destinationId = $this->post('destinationId');
-//		$postImage = $this->post('postImage');
-//
-//		$uploadResult = \Cloudinary\Uploader::upload($postImage, array("folder" => "posts"));
-//		$postImage = $uploadResult['secure_url'];
-//
-//		$this->Post_model->setPostTitle($postTitle);
-//		$this->Post_model->setPostDesc($postDesc);
-//		$this->Post_model->setPostLikes($postLikes);
-//		$this->Post_model->setPostUploadTime($postUploadTime);
-//		$this->Post_model->setIsLiked($isLiked);
-//		$this->Post_model->setUserId($userId);
-//		$this->Post_model->setDestinationId($destinationId);
-//		$this->Post_model->setPostImage($postImage);
-//
-//		$result = $this->Post_model->createPost();
-//
-//		if ($result) {
+
+	function getMyPosts()
+	{
+
+
+//		if ($posts)
+//		{
 //			$this->response([
 //				'status' => true,
-//				'message' => 'Post created successfully'
+//				'data' => $posts
 //			], RestController::HTTP_OK);
-//		} else {
+//		}
+//		else
+//		{
 //			$this->response([
 //				'status' => false,
-//				'message' => 'Post creation failed'
-//			], RestController::HTTP_BAD_REQUEST);
+//			], RestController::HTTP_NOT_FOUND);
 //		}
-//	}
+	}
 }
