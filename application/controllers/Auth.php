@@ -39,7 +39,6 @@ class Auth extends RestController
 		$email = $this->post('email');
 		$password = $this->post('password');
 
-
 		$response = $this->User_model->login($email, $password);
 		$this->console_log($email);
 

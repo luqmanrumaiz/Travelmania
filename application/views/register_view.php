@@ -77,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script>
-	$('#username').bind('input', function() {
+		$('#username').bind('input', function() {
 		var username = $(this);
 
 		// Username must be 8-20 characters and you must not start or end with _ or .
