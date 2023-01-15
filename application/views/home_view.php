@@ -121,8 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div>
 					<h5>Recent Posts</h5>
 					<?php foreach ($posts as $post) : ?>
-						<br>
-						<div class="card text-white bg-dark mb-3 rounded">
+						<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['postId']; ?>">
 							<a href="post/<?php echo $post['postId']; ?>">
 								<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>"
 									 class="card-img-top" alt="post-image">
@@ -138,7 +137,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 								</div>
 							</div>
 						</div>
-						<br>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -160,16 +158,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		reader.readAsDataURL(file);
 	};
 
-	$(document).ready(function(){
-		$(".fa-trash").click(function(){
-			$.ajax({
-				url: "<?php echo base_url(); ?>index.php/Post/deletePost",
-				method: "POST",
-				data: {postId: $(this).attr("data-id")},
-				success: function(data){
-				alert(data);
-				}
-			});
+	$(".fa-trash").click(function() {
+		var id = $(this).data("id");
+		$.ajax({
+			url: "<?php echo base_url(); ?>index.php/Post/deletePost",
+			method: "POST",
+			data: {postId: $(this).attr("data-id")},
+			success: function(data){
+				$("[data-id='card-" + id + "']").remove();
+			}
 		});
 	});
 </script>
