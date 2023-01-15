@@ -46,6 +46,23 @@ class Post extends RestController
 		redirect('/');
 	}
 
+	function likePost_post()
+	{
+		$this->Post_model->setPostId($this->post('postId'));
+		$this->Post_model->setIsLiked($this->post('isLiked'));
+		$this->Post_model->setUserId($this->session->userdata('user')['userId']);
+
+		$this->Post_model->likePost();
+	}
+
+	function deletePost_post()
+	{
+		$this->Post_model->setPostId($this->post('postId'));
+		$this->Post_model->setUserId($this->session->userdata('user')['userId']);
+
+		$this->Post_model->deletePost();
+	}
+
 	function getMyPosts()
 	{
 

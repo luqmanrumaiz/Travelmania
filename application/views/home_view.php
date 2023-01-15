@@ -11,16 +11,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/home.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/main.css">
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
-
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-xl">
 	<div class="row">
 		<div class="col-8">
 			<div class="row">
@@ -28,6 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<div class="row">
 						<div class="col align-self-start">
 							<h2>Travelmania</h2>
+							<form action="<?php echo base_url(); ?>index.php/auth/logout" method="get">
+								<button type="submit" class="btn btn-primary">Logout</button>
+							</form>
 						</div>
 						<div class="col align-self-end">
 							<form class="form-inline my-2 my-lg-0 float-right">
@@ -96,8 +98,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 bg-danger rounded h-100">
-			<div class="offcanvas offcanvas-end grey-bg show position-fixed" data-bs-scroll="true" data-bs-backdrop="static" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+		<div class="col-4 ">
+			<div class="offcanvas offcanvas-end grey-bg show position-fixed" style="overflow: scroll">
 				<div class="offcanvas-header">
 					<div class="avatar mx-auto position-relative" style="width: 128px; height: 128px;">
 						<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle">
@@ -119,14 +121,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div>
 					<h5>Recent Posts</h5>
 					<?php foreach ($posts as $post) : ?>
-						<div class="card bg-dark text-white">
-							<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>" class="card-img" alt="...">
-							<div class="card-img-overlay">
-								<h5 class="card-title"><?php echo $post['postTitle']; ?></h5>
-								<p class="card-text"><?php echo $post['postDesc']; ?></p>
-								<p class="card-text"><?php echo $post['postUploadTime']; ?></p>
+						<br>
+						<div class="card text-white bg-dark mb-3 rounded">
+							<a href="post/<?php echo $post['postId']; ?>">
+								<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>"
+									 class="card-img-top" alt="post-image">
+							</a>
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<h5 class="card-title"><?php echo $post['postTitle'];?></h5>
+									</div>
+									<div class="col">
+										<i class="fa-solid fa-trash float-right p-2" data-id="<?php echo $post['postId']; ?>"></i>
+									</div>
+								</div>
 							</div>
 						</div>
+						<br>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -148,6 +160,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		reader.readAsDataURL(file);
 	};
 
+	$(document).ready(function(){
+		$(".fa-trash").click(function(){
+			$.ajax({
+				url: "<?php echo base_url(); ?>index.php/Post/deletePost",
+				method: "POST",
+				data: {postId: $(this).attr("data-id")},
+				success: function(data){
+				alert(data);
+				}
+			});
+		});
+	});
 </script>
 </body>
 </html>

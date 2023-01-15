@@ -161,6 +161,78 @@ class Post_model extends CI_Model {
 		}
 	}
 
+	public function getMyPost($postId)
+	{
+		try
+		{
+			$this->db->select('*');
+			$this->db->from('post');
+			$this->db->where('postId', $postId);
+			if ($query = $this->db->get())
+			{
+				return $query->row();
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
+	public function likePost()
+	{
+		try
+		{
+			if ($this->isLiked == 0)
+			{
+				$this->db->set('postLikes', 'postLikes+1', FALSE);
+				$this->db->set('isLiked', 1);
+			}
+			else
+			{
+				$this->db->set('postLikes', 'postLikes-1', FALSE);
+				$this->db->set('isLiked', 0);
+			}
+			$this->db->where('postId', $this->getPostId());
+			if ($this->db->update('post'))
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
+	public function deletePost()
+	{
+		try
+		{
+			$this->db->where('postId', $this->getPostId());
+			if ($this->db->delete('post'))
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
 	public function getPosts()
 	{
 		$query = $this->db->get('post');

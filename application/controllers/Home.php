@@ -66,4 +66,15 @@ class Home extends CI_Controller {
 			redirect('login');
 		}
 	}
+
+	public function post()
+	{
+		$this->load->helper('url');
+
+		$post = $this->Post_model->getMyPost($this->uri->segment(2));
+		$data['post'] = json_decode(json_encode($post), true);
+
+		$this->load->view('post_view', $data);
+	}
+
 }

@@ -8,5 +8,6 @@ $route['translate_uri_dashes'] = FALSE;
 $route['register'] = 'home/register';
 $route['login'] = 'home/login';
 $route['home'] = 'home/home';
+$route['post/(:num)'] = 'home/post/$1';
 
 
