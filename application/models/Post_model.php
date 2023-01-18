@@ -5,7 +5,7 @@ class Post_model extends CI_Model {
 	private $post_id;
 	private $post_title;
 	private $post_desc;
-	private $post_image_file_name;
+	private $post_image_filename;
 	private $post_likes;
 	private $post_upload_time;
 	private $is_liked;
@@ -34,9 +34,9 @@ class Post_model extends CI_Model {
 		$this->post_desc = $post_desc;
 	}
 
-	public function set_post_image_file_name($post_image_file_name)
+	public function set_post_image_filename($post_image_filename)
 	{
-		$this->post_image_file_name = $post_image_file_name;
+		$this->post_image_filename = $post_image_filename;
 	}
 
 	public function set_post_likes($post_likes)
@@ -79,9 +79,9 @@ class Post_model extends CI_Model {
 		return $this->post_desc;
 	}
 
-	public function get_post_image_file_name()
+	public function get_post_image_filename()
 	{
-		return $this->post_image_file_name;
+		return $this->post_image_filename;
 	}
 
 	public function get_post_likes()
@@ -114,14 +114,13 @@ class Post_model extends CI_Model {
 		try
 		{
 			if ($this->db->insert('post', array(
-				'postTitle' => $this->post_title,
-				'postDesc' => $this->post_desc,
-				'postImageFileName' => $this->post_image_file_name,
-				'postLikes' => $this->post_likes,
-				'postUploadTime' => $this->post_upload_time,
-				'isLiked' => $this->is_liked,
-				'userId' => $this->user_id
-
+				'post_title' => $this->get_post_title(),
+				'post_desc' => $this->get_post_desc(),
+				'post_image_filename' => $this->get_post_image_filename(),
+				'post_likes' => $this->get_post_likes(),
+				'post_upload_time' => $this->get_post_upload_time(),
+				'user_id' => $this->get_user_id(),
+				'destination_id' => $this->get_destination_id()
 			)))
 			{
 				return True;
@@ -144,8 +143,8 @@ class Post_model extends CI_Model {
 		{
 			$this->db->select('*');
 			$this->db->from('post');
-			$this->db->where('userId', $this->get_user_id());
-			$this->db->order_by('postUploadTime');
+			$this->db->where('user_id', $this->get_user_id());
+			$this->db->order_by('post_upload_time');
 			if ($query = $this->db->get())
 			{
 				return $query->result();
@@ -167,7 +166,7 @@ class Post_model extends CI_Model {
 		{
 			$this->db->select('*');
 			$this->db->from('post');
-			$this->db->where('postId', $post_id);
+			$this->db->where('post_id', $post_id);
 			if ($query = $this->db->get())
 			{
 				return $query->row();
@@ -189,15 +188,15 @@ class Post_model extends CI_Model {
 		{
 			if ($this->is_liked == 0)
 			{
-				$this->db->set('postLikes', 'postLikes+1', FALSE);
-				$this->db->set('isLiked', 1);
+				$this->db->set('post_likes', 'post_likes+1', FALSE);
+				$this->db->set('is_liked', 1);
 			}
 			else
 			{
-				$this->db->set('postLikes', 'postLikes-1', FALSE);
-				$this->db->set('isLiked', 0);
+				$this->db->set('post_likes', 'post_likes-1', FALSE);
+				$this->db->set('is_liked', 0);
 			}
-			$this->db->where('postId', $this->get_post_id());
+			$this->db->where('post_id', $this->get_post_id());
 			if ($this->db->update('post'))
 			{
 				return True;
@@ -217,7 +216,7 @@ class Post_model extends CI_Model {
 	{
 		try
 		{
-			$this->db->where('postId', $this->get_post_id());
+			$this->db->where('post_id', $this->get_post_id());
 			if ($this->db->delete('post'))
 			{
 				return True;

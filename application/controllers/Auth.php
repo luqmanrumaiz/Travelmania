@@ -39,7 +39,6 @@ class Auth extends RestController
 		$password = $this->post('password');
 
 		$response = $this->User_model->login($email, $password);
-		$this->console_log($email);
 
 		if ($response['logged_in'])
 		{
@@ -59,23 +58,5 @@ class Auth extends RestController
 	{
 		$this->session->sess_destroy();
 		redirect('/');
-	}
-
-	function json_output($statusHeader,$response)
-	{
-		$ci =& get_instance();
-		$ci->output->set_content_type('application/json');
-		$ci->output->set_status_header($statusHeader);
-		$ci->output->set_output(json_encode($response));
-	}
-
-	function console_log($output, $with_script_tags = true)
-	{
-		$js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
-			');';
-		if ($with_script_tags) {
-			$js_code = '<script>' . $js_code . '</script>';
-		}
-		echo $js_code;
 	}
 }

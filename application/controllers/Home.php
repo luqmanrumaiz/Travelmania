@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 		$this->load->database();
 		$this->load->model('Post_model');
 		$this->load->model('Comment_model');
+		$this->load->model('Destination_model');
 		$this->load->helper('url');
 	}
 
@@ -46,7 +47,7 @@ class Home extends CI_Controller {
 
 		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
 		{
-			$this->Post_model->set_user_id($this->session->userdata('user')['userId']);
+			$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
 			$posts = $this->Post_model->get_my_posts();
 
 			if(empty($posts))
@@ -72,18 +73,22 @@ class Home extends CI_Controller {
 	{
 		$this->load->helper('url');
 
-		if ($this->uri->segment(2))
-		{
+
 			$post = $this->Post_model->get_my_post($this->uri->segment(2));
 			$data['post'] = json_decode(json_encode($post), true);
 
-			$data['comments'] = $this->Comment_model->get_comments_by_post_id($this->uri->segment(2));
+			if ($this->Comment_model->get_comments_by_post_id($this->uri->segment(2)))
+			{
+				$comments = $this->Comment_model->get_comments_by_post_id($this->uri->segment(2));
+				$data['comments'] = json_decode(json_encode($comments), true);
+			}
+			else
+			{
+				$data['comments'] = array();
+			}
+
+			$data['destination'] = json_decode(json_encode($this->Destination_model->get_destination(2)), true);
 
 			$this->load->view('post_view', $data);
-		}
-		else
-		{
-			redirect('home');
-		}
 	}
 }

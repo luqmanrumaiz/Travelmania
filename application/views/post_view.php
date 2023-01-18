@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div class="row">
 			<div class="col">
 				<h2 class="text-left">Viewing Post</h2>
-				<span>Pakistan, Islamabad</span>
+				<span><?php echo $destination['destination_country'] . ', '. $destination['destination_city'] ; ?></span>
 			</div>
 		</div>
 
@@ -47,22 +47,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							<div class="col">
 								<div class="row"  style="display: flex; align-items: center; height: 100%;">
 									<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle mr-4" style="width: 32px; height: 32px;">
-									<h5 class="card-title"><?php echo $post['postTitle']; ?></h5>
+									<h5 class="card-title"><?php echo $post['post_title']; ?></h5>
 								</div>
 								<br>
-								<p class="card-text"><?php echo $post['postDesc']; ?></p>
+								<p class="card-text"><?php echo $post['post_desc']; ?></p>
 							</div>
 
 						</div>
 					</div>
 					<div class="col-6">
-						<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>" class="card-img" alt="post-image">
+						<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>" class="card-img" alt="post-image">
 					</div>
 				</div>
 
 				<div class="card-footer d-flex justify-content-between align-items-center">
 					<div class="left">
-						<?php echo $post['postUploadTime']; ?>
+						<?php echo $post['post_upload_time']; ?>
 					</div>
 					<div class="middle">
 						<i class="fa-regular fa-comment">
@@ -72,12 +72,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					</div>
 					<div class="right">
 						<i class="<?php
-						if($post['isLiked'] == 0)
+						if($post['is_liked'] == 0)
 							echo "fa-regular";
 						else
 							echo "fa-solid"?>
 							fa-heart">
-							<span class="badge badge-dark"><?php echo $post['postLikes']; ?></span>
+							<span class="badge badge-dark"><?php echo $post['post_likes']; ?></span>
 						</i>
 					</div>
 				</div>
@@ -110,8 +110,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		//		contentType: 'application/json',
 		//		data: {
 		//			JSON.stringify({
-		//				postId: <?php //echo $post['postId']; ?>//,
-		//				isLiked: true
+		//				post_id: <?php //echo $post['post_id']; ?>//,
+		//				is_liked: true
 		//			})
 		//		},
 		//		success: function(data) {
@@ -127,6 +127,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		$('.fa-solid').click(function() {
 			$(this).toggleClass('fa-regular fa-heart');
 		});
+
+		// ajax call to comment
+		$('')
 
 	</script>
 </body>

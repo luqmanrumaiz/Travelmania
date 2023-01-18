@@ -17,11 +17,11 @@ class Comment extends RestController
 	public function create_comment_post()
 	{
 		$comment = new Comment_model();
-		$comment->setCommentText($this->post('commentText'));
-		$comment->setUserId($this->post('userId'));
-		$comment->setPostId($this->post('postId'));
-		$comment->setCommentUploadtime($this->post('commentUploadTime'));
-		$comment->createComment();
+		$comment->set_comment_text($this->post('comment_text'));
+		$comment->set_user_id($this->post('user_id'));
+		$comment->set_post_id($this->post('post_id'));
+		$comment->set_comment_upload_time($this->post('comment_upload_time'));
+		$comment->create_comment();
 
 		$this->response($comment, RestController::HTTP_CREATED);
 	}

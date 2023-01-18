@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 														<input type='file' id='post-img-upload' name="post-img-upload">
 														<br>
 														<br>
-														<img id="post-img-placeholder" src="<?php echo base_url(); ?>assets/images/register_background.jpg" alt="Placeholder Image" class="img-fluid">
+														<img id="post-img-placeholder" src="<?php echo base_url(); ?>assets/images/placeholder_image.jpg" alt="Placeholder Image" class="img-fluid">
 													</div>
 													<div class="col-6">
 														<input type="text" class="form-control" id="title" name="title" placeholder="Post Title">
@@ -115,7 +115,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							<i class="fas fa-edit"></i>
 						</button>
 					</p>
-					<?php echo $this->session->userdata('user')['userBio']; ?>
+					<?php echo $this->session->userdata('user')['user_bio']; ?>
 
 				</div>
 				<form action="<?php echo base_url(); ?>index.php/user/logout" method="get">
@@ -125,18 +125,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div>
 					<h5>Recent Posts</h5>
 					<?php foreach ($posts as $post) : ?>
-						<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['postId']; ?>">
-							<a href="post/<?php echo $post['postId']; ?>">
-								<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['postImageFileName']; ?>"
+						<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['post_id']; ?>">
+							<a href="post/<?php echo $post['post_id']; ?>">
+								<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
 									 class="card-img-top" alt="post-image">
 							</a>
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<h5 class="card-title"><?php echo $post['postTitle'];?></h5>
+										<h5 class="card-title"><?php echo $post['post_title'];?></h5>
 									</div>
 									<div class="col">
-										<i class="fa-solid fa-trash float-right p-2" data-id="<?php echo $post['postId']; ?>"></i>
+										<i class="fa-solid fa-trash float-right p-2" data-id="<?php echo $post['post_id']; ?>"></i>
 									</div>
 								</div>
 							</div>
@@ -151,6 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 
 <script>
 	var uploadInput = document.getElementById("post-img-upload");
+	console.log(uploadInput);
 	var previewImg = document.getElementById("post-img-placeholder");
 
 	uploadInput.onchange = function() {
@@ -161,30 +162,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		};
 		reader.readAsDataURL(file);
 	};
-
-	$(".fa-trash").click(function() {
-		var id = $(this).data("id");
-		$.ajax({
-			url: "<?php echo base_url(); ?>index.php/Post/deletePost",
-			method: "POST",
-			data: {postId: $(this).attr("data-id")},
-			success: function(data){
-				$("[data-id='card-" + id + "']").remove();
-			}
-		});
-	});
-
-	$(".edit-bio").click(function() {
-		var id = $(this).data("id");
-		$.ajax({
-			url: "<?php echo base_url(); ?>index.php//deletePost",
-			method: "POST",
-			data: {postId: $(this).attr("data-id")},
-			success: function(data){
-				$("[data-id='card-" + id + "']").remove();
-			}
-		});
-	});
+	//
+	//$(".fa-trash").click(function() {
+	//	var id = $(this).data("id");
+	//	$.ajax({
+	//		url: "<?php //echo base_url(); ?>//index.php/Post/delete,
+	//		method: "DELETE",
+	//		data: {post_id: $(this).attr("data-id")},
+	//		success: function(data){
+	//			$("[data-id='card-" + id + "']").remove();
+	//		}
+	//	});
+	//});
+	//
+	//$(".edit-bio").click(function() {
+	//	var id = $(this).data("id");
+	//	$.ajax({
+	//		url: "<?php //echo base_url(); ?>//index.php//deletePost",
+	//		method: "POST",
+	//		data: {post_id: $(this).attr("data-id")},
+	//		success: function(data){
+	//			$("[data-id='card-" + id + "']").remove();
+	//		}
+	//	});
+	//});
 </script>
 </body>
 </html>

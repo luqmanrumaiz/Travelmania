@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
-use Cloudinary\Configuration\Configuration;
 
 class Post extends RestController
 {
@@ -23,54 +22,33 @@ class Post extends RestController
 
 		move_uploaded_file($tmp_img_name, $folder.$img_name);
 
-		$this->Post_model->setPostTitle($this->post('title'));
-		$this->Post_model->setPostDesc($this->post('description'));
-		$this->Post_model->setPostImageFileName($img_name);
-		$this->Post_model->setPostLikes(0);
-		$this->Post_model->setPostUploadTime(date("Y-m-d H:i"));
-		$this->Post_model->setIsLiked(false);
-		$this->Post_model->setUserId($this->session->userdata('user')['userId']);
-		$this->Post_model->setDestinationId(1);
+		$this->Post_model->set_post_title($this->post('title'));
+		$this->Post_model->set_post_desc($this->post('description'));
+		$this->Post_model->set_post_image_filename($img_name);
+		$this->Post_model->set_post_likes(0);
+		$this->Post_model->set_post_upload_time(date('Y-m-d H:i'));
+		$this->Post_model->set_is_liked(false);
+		$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
+		$this->Post_model->set_destination_id($this->session->userdata('user')['destination_id']);
 
 		$this->Post_model->create();
-//		'message' => 'Post creation failed'
 
 		redirect('/');
 	}
 
 	function like_post()
 	{
-		$this->Post_model->setPostId($this->post('postId'));
-		$this->Post_model->setIsLiked($this->post('isLiked'));
-		$this->Post_model->setUserId($this->session->userdata('user')['userId']);
+		$this->Post_model->set_post_id($this->post('post_id'));
+		$this->Post_model->set_user_id($this->post('user_id'));
 
-		$this->Post_model->likePost();
+		$this->Post_model->like();
 	}
 
 	function delete_delete()
 	{
-		$this->Post_model->setPostId($this->post('postId'));
-		$this->Post_model->setUserId($this->session->userdata('user')['userId']);
+		$this->Post_model->set_post_id($this->delete('post_id'));
+		$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
 
-		$this->Post_model->deletePost();
-	}
-
-	function getMyPosts()
-	{
-
-
-//		if ($posts)
-//		{
-//			$this->response([
-//				'status' => true,
-//				'data' => $posts
-//			], RestController::HTTP_OK);
-//		}
-//		else
-//		{
-//			$this->response([
-//				'status' => false,
-//			], RestController::HTTP_NOT_FOUND);
-//		}
+		$this->Post_model->delete();
 	}
 }

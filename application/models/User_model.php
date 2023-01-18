@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
-	private $userId;
+	private $user_id;
 	private $username;
 	private $email;
 	private $password;
-	private $userBio;
-	private $userAvatarUrl;
-	private $destinationId;
+	private $user_bio;
+	private $user_avatar_filename;
+	private $destination_id;
 
 
 	public function __construct()
@@ -17,74 +17,74 @@ class User_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function setUserId($userId)
+	public function set_user_id($user_id)
 	{
-		$this->userId = $userId;
+		$this->user_id = $user_id;
 	}
 
-	public function setUsername($username)
+	public function set_username($username)
 	{
 		$this->username = $username;
 	}
 
-	public function setUserBio($userBio)
-	{
-		$this->userBio = $userBio;
-	}
-
-	public function setUserAvatarUrl($userAvatarUrl)
-	{
-		$this->userAvatarUrl = $userAvatarUrl;
-	}
-
-	public function setDestinationId($destinationId)
-	{
-		$this->destinationId = $destinationId;
-	}
-
-	public function getUserId()
-	{
-		return $this->userId;
-	}
-
-	public function getUsername()
-	{
-		return $this->username;
-	}
-
-	public function getUserBio()
-	{
-		return $this->userBio;
-	}
-
-	public function getUserAvatarUrl()
-	{
-		return $this->userAvatarUrl;
-	}
-
-	public function getDestinationId()
-	{
-		return $this->destinationId;
-	}
-
-	public function getEmail()
-	{
-		return $this->email;
-	}
-
-	public function setEmail($email)
+	public function set_email($email)
 	{
 		$this->email = $email;
 	}
 
-	public function getPassword()
+	public function set_password($password)
+	{
+		$this->password = $password;
+	}
+
+	public function set_user_bio($user_bio)
+	{
+		$this->user_bio = $user_bio;
+	}
+
+	public function set_user_avatar_filename($user_avatar_filename)
+	{
+		$this->user_avatar_filename = $user_avatar_filename;
+	}
+
+	public function set_destination_id($destination_id)
+	{
+		$this->destination_id = $destination_id;
+	}
+
+	public function get_user_id()
+	{
+		return $this->user_id;
+	}
+
+	public function get_username()
+	{
+		return $this->username;
+	}
+
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function get_password()
 	{
 		return $this->password;
 	}
 
-	public function setPassword($password)
+	public function get_user_bio()
 	{
-		$this->password = $password;
+		return $this->user_bio;
+	}
+
+	public function get_user_avatar_filename()
+	{
+		return $this->user_avatar_filename;
+	}
+
+	public function get_destination_id()
+	{
+		return $this->destination_id;
 	}
 
 	public function create($username, $email, $password)
@@ -93,18 +93,18 @@ class User_model extends CI_Model {
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 		// Generating a unique user id based on a random number and also using entropy for more randomness
-		$userId = uniqid(uniqid(rand(), true));
+		$user_id = uniqid(uniqid(rand(), true));
 
 		try
 		{
-			if ($this->db->insert('user', array('userId' => $userId, 'username' => $username, 'email' => $email,
-				'password' => $hashed_password, 'destinationId' => 1)))
+			if ($this->db->insert('user', array('user_id' => $user_id, 'username' => $username, 'email' => $email,
+				'password' => $hashed_password, 'destination_id' => 1)))
 			{
-				return True;
+				return $user_id;
 			}
 			else
 			{
-				return False;
+				return false;
 			}
 		}
 		catch (Exception $e)
@@ -130,16 +130,17 @@ class User_model extends CI_Model {
 
 			if (password_verify($password, $row->password))
 			{
-				$this->setUserId($row->userId);
-				$this->setUsername($row->username);
-				$this->setEmail($row->email);
-				$this->setUserBio($row->userBio);
-				$this->setUserAvatarUrl($row->userAvatarUrl);
-				$this->setDestinationId($row->destinationId);
+				$this->set_user_id($row->user_id);
+				$this->set_username($row->username);
+				$this->set_email($row->email);
+				$this->set_user_bio($row->user_bio);
+				$this->set_user_avatar_filename($row->user_avatar_filename);
+				$this->set_destination_id($row->destination_id);
 
-				return array('logged_in' => true, 'user' => array('userId' => $row->userId, 'username' => $row->username,
-				'email' => $row->email, 'userBio' => $row->userBio, 'userAvatarUrl' => $row->userAvatarUrl,
-				'destinationId' => $row->destinationId));
+				return array('logged_in' => true, 'user' => array('user_id' => $this->get_user_id(),
+					'username' => $this->get_username(), 'email' => $this->get_email(),
+					'user_bio' => $this->get_user_bio(), 'user_avatar_filename' => $this->get_user_avatar_filename(),
+					'destination_id' => $this->get_destination_id()));
 			}
 			else
 			{

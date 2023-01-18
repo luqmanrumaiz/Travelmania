@@ -1,0 +1,500 @@
+1,Japan,Tokyo
+2,Indonesia,Jakarta
+3,India,Delhi
+4,Philippines,Manila
+5,Brazil,São Paulo
+6,South Korea,Seoul
+7,India,Mumbai
+8,China,Shanghai
+9,Mexico,Mexico City
+10,China,Guangzhou
+11,Egypt,Cairo
+12,China,Beijing
+13,United States,New York
+14,India,Kolkāta
+15,Russia,Moscow
+16,Thailand,Bangkok
+17,Bangladesh,Dhaka
+18,Argentina,Buenos Aires
+19,Japan,Ōsaka
+20,Nigeria,Lagos
+21,Turkey,Istanbul
+22,Pakistan,Karachi
+23,Congo (Kinshasa),Kinshasa
+24,China,Shenzhen
+25,India,Bangalore
+26,Vietnam,Ho Chi Minh City
+27,Iran,Tehran
+28,United States,Los Angeles
+29,Brazil,Rio de Janeiro
+30,China,Chengdu
+31,China,Baoding
+32,India,Chennai
+33,Pakistan,Lahore
+34,United Kingdom,London
+35,France,Paris
+36,China,Tianjin
+37,China,Linyi
+38,China,Shijiazhuang
+39,China,Zhengzhou
+40,China,Nanyang
+41,India,Hyderābād
+42,China,Wuhan
+43,China,Handan
+44,Japan,Nagoya
+45,China,Weifang
+46,Peru,Lima
+47,China,Zhoukou
+48,Angola,Luanda
+49,China,Ganzhou
+50,China,Tongshan
+51,Malaysia,Kuala Lumpur
+52,United States,Chicago
+53,China,Heze
+54,China,Chongqing
+55,Vietnam,Hanoi
+56,China,Fuyang
+57,China,Changsha
+58,China,Dongguan
+59,China,Jining
+60,China,Jinan
+61,India,Pune
+62,China,Foshan
+63,Colombia,Bogotá
+64,India,Ahmedabad
+65,China,Nanjing
+66,China,Changchun
+67,China,Tangshan
+68,China,Cangzhou
+69,Tanzania,Dar es Salaam
+70,China,Hefei
+71,Hong Kong,Hong Kong
+72,China,Shaoyang
+73,China,Zhanjiang
+74,China,Shangqiu
+75,China,Nantong
+76,China,Yancheng
+77,China,Nanning
+78,China,Hengyang
+79,China,Zhumadian
+80,China,Shenyang
+81,China,Xingtai
+82,China,Xi’an
+83,Chile,Santiago
+84,China,Yantai
+85,Saudi Arabia,Riyadh
+86,China,Luoyang
+87,China,Kunming
+88,China,Shangrao
+89,China,Hangzhou
+90,China,Bijie
+91,China,Quanzhou
+92,United States,Miami
+93,China,Wuxi
+94,China,Huanggang
+95,China,Maoming
+96,China,Nanchong
+97,China,Zunyi
+98,China,Qujing
+99,Iraq,Baghdad
+100,China,Xinyang
+101,China,Jieyang
+102,Sudan,Khartoum
+103,Spain,Madrid
+104,India,Allahābād
+105,China,Yulin
+106,China,Changde
+107,China,Liaocheng
+108,China,Qingdao
+109,United States,Dallas
+110,China,Nangandao
+111,China,Xiangyang
+112,United States,Philadelphia
+113,Egypt,Giza
+114,China,Lu’an
+115,China,Zhaotong
+116,China,Yichun
+117,China,Dezhou
+118,Kenya,Nairobi
+119,China,Nanchang
+120,China,Tai’an
+121,China,Dazhou
+122,United States,Houston
+123,Mexico,Guadalajara
+124,China,Yongzhou
+125,United States,Atlanta
+126,Myanmar,Rangoon
+127,Canada,Toronto
+128,China,Suihua
+129,Russia,Saint Petersburg
+130,United States,Washington
+131,China,Qiqihar
+132,China,Suzhou
+133,China,Shantou
+134,China,Weinan
+135,China,Changzhou
+136,Singapore,Singapore
+137,China,Fuzhou
+138,China,Pudong
+139,Brazil,Belo Horizonte
+140,China,Zhangzhou
+141,China,Yuncheng
+142,China,Suzhou
+143,China,Xianyang
+144,China,Guilin
+145,China,Taizhou
+146,Côte d'Ivoire,Abidjan
+147,China,Huaihua
+148,China,Ji’an
+149,China,Xiaoganzhan
+150,China,Pingdingshan
+151,China,Jiujiang
+152,India,Sūrat
+153,China,Guiyang
+154,Egypt,Alexandria
+155,China,Bozhou
+156,Australia,Sydney
+157,China,Huizhou
+158,China,Huai’an
+159,China,Chenzhou
+160,Spain,Barcelona
+161,China,Anqing
+162,China,Suqian
+163,United States,Boston
+164,China,Jiangmen
+165,China,Mianyang
+166,China,Harbin
+167,China,Huanglongsi
+168,Australia,Melbourne
+169,China,Zibo
+170,China,Dalian
+171,China,Hengshui
+172,China,Yibin
+173,China,Yangzhou
+174,Colombia,Timbío
+175,South Africa,Johannesburg
+176,China,Yiyang
+177,China,Guigang
+178,China,Xinpu
+179,China,Meizhou
+180,Morocco,Casablanca
+181,China,Langfang
+182,China,Zhangjiakou
+183,China,Chifeng
+184,China,Linfen
+185,China,Jiangguanchi
+186,Afghanistan,Kabul
+187,United States,Phoenix
+188,China,Luzhou
+189,China,Taiyuan
+190,China,Zhaoqing
+191,China,Xiaoxita
+192,China,Xiamen
+193,China,Fuzhou
+194,China,Liuzhou
+195,China,Zhuzhou
+196,Jordan,Amman
+197,Saudi Arabia,Jeddah
+198,China,Chuzhou
+199,China,Loudi
+200,China,Deyang
+201,China,Qingyuan
+202,Nigeria,Kano
+203,China,Wuhu
+204,United States,Seattle
+205,Japan,Yokohama
+206,China,Binzhou
+207,China,Baojishi
+208,China,Zaozhuang
+209,China,Neijiang
+210,China,Baicheng
+211,Germany,Berlin
+212,China,Anshan
+213,China,Lanzhou
+214,China,Puyang
+215,United States,San Francisco
+216,China,Jiaozuo
+217,China,Hechi
+218,Canada,Montréal
+219,United States,Detroit
+220,China,Chengde
+221,South Korea,Busan
+222,Algeria,Algiers
+223,China,Hanzhong
+224,China,Shiyan
+225,India,Lucknow
+226,China,Siping
+227,China,Yulinshi
+228,China,Changzhi
+229,China,Qinzhou
+230,China,Bazhou
+231,China,Qincheng
+232,China,Zhongshan
+233,China,Suining
+234,China,Leshan
+235,United States,San Diego
+236,Pakistan,Faisalabad
+237,China,Guang’an
+238,China,Tongren
+239,China,Bengbu
+240,Bolivia,Santa Cruz
+241,China,Qinhuangdao
+242,China,Tongliao
+243,China,Jinzhou
+244,China,Zhenjiang
+245,China,Ürümqi
+246,China,Heyuan
+247,India,Jaipur
+248,China,Xinzhou
+249,China,Wuzhou
+250,Ethiopia,Addis Ababa
+251,China,Chaoyang
+252,Brazil,Brasília
+253,Iran,Mashhad
+254,China,Shaoguan
+255,Kuwait,Kuwait City
+256,China,Shanwei
+257,Philippines,Quezon City
+258,United States,Minneapolis
+259,Ukraine,Kyiv
+260,Yemen,Sanaa
+261,China,Meishan
+262,Guatemala,Guatemala City
+263,South Korea,Incheon
+264,China,Ningde
+265,United States,Tampa
+266,China,Daqing
+267,China,Putian
+268,Indonesia,Bandung
+269,Indonesia,Surabaya
+270,Brazil,Salvador
+271,United States,Denver
+272,Italy,Rome
+273,Bolivia,La Paz
+274,China,Hohhot
+275,China,Xiangtan
+276,North Korea,Pyongyang
+277,Taiwan,Taichung
+278,China,Weihai
+279,China,Rizhao
+280,China,Mudanjiang
+281,Taiwan,Kaohsiung
+282,Ecuador,Guayaquil
+283,China,Tieling
+284,India,Cawnpore
+285,China,Dingxi
+286,Taiwan,Taipei
+287,China,Nanping
+288,China,Zigong
+289,China,Chaozhou
+290,China,Baotou
+291,China,Gulou
+292,China,Longyan
+293,China,Ankang
+294,China,Baoshan
+295,China,Huludao
+296,Madagascar,Antananarivo
+297,China,Yanjiang
+298,Bangladesh,Chattogram
+299,Dominican Republic,Santo Domingo
+300,China,Sanming
+301,China,Longba
+302,United States,Brooklyn
+303,China,Yangjiang
+304,China,Jiamusi
+305,Nigeria,Ibadan
+306,China,Luohe
+307,China,Lincang
+308,Colombia,Medellín
+309,China,Xuanzhou
+310,China,Yunfu
+311,United Arab Emirates,Dubai
+312,India,Mirzāpur
+313,Uzbekistan,Tashkent
+314,China,Guangyuan
+315,Colombia,Cali
+316,China,Huangshi
+317,Burkina Faso,Ouagadougou
+318,South Korea,Daegu
+319,Brazil,Fortaleza
+320,Cameroon,Yaoundé
+321,Cameroon,Douala
+322,China,Jilin
+323,China,Dandong
+324,China,Lianshan
+325,China,Yingkou
+326,India,Nāgpur
+327,Sudan,Omdurman
+328,Indonesia,Bekasi
+329,India,Ghāziābād
+330,China,Yuxi
+331,Australia,Brisbane
+332,China,Anshun
+333,Indonesia,Depok
+334,China,Shangzhou
+335,China,Huainan
+336,China,Kuaidamao
+337,Ghana,Accra
+338,Japan,Fukuoka
+339,China,Jincheng
+340,Canada,Vancouver
+341,Indonesia,Tangerang
+342,China,Sanmenxia
+343,China,Laibin
+344,United States,Queens
+345,China,Qinbaling
+346,China,Xining
+347,China,Ma’anshan
+348,China,Yan’an
+349,Azerbaijan,Baku
+350,China,Gaoping
+351,Zimbabwe,Harare
+352,Cuba,Havana
+353,Cambodia,Phnom Penh
+354,China,Ningbo
+355,Somalia,Mogadishu
+356,China,Puning
+357,Indonesia,Medan
+358,China,Huaibei
+359,China,Qingyang
+360,United States,Riverside
+361,United States,Baltimore
+362,Vietnam,Haiphong
+363,United States,Las Vegas
+364,China,Chongzuo
+365,Pakistan,Rawalpindi
+366,Ghana,Kumasi
+367,United States,Portland
+368,India,Vadodara
+369,China,Hezhou
+370,China,Pingliang
+371,United States,San Antonio
+372,Australia,Perth
+373,India,Vishākhapatnam
+374,China,Shengli
+375,Pakistan,Gujranwala
+376,China,Baicheng
+377,China,Fushun
+378,United States,St. Louis
+379,Mali,Bamako
+380,Ecuador,Quito
+381,Belarus,Minsk
+382,India,Indore
+383,China,Yinchuan
+384,Congo (Kinshasa),Kananga
+385,Pakistan,Peshawar
+386,Japan,Sapporo
+387,Iran,Eşfahān
+388,Venezuela,Caracas
+389,China,Pingxiang
+390,Syria,Aleppo
+391,Mexico,Tijuana
+392,Kazakhstan,Almaty
+393,Austria,Vienna
+394,India,Thāne
+395,United States,Sacramento
+396,Malawi,Blantyre
+397,Taiwan,Tainan
+398,China,Zhuhai
+399,Romania,Bucharest
+400,Brazil,Curitiba
+401,Pakistan,Multan
+402,China,Xiping
+403,Mexico,Ecatepec
+404,China,Jixi
+405,Pakistan,Saidu Sharif
+406,China,Liaoyang
+407,Germany,Hamburg
+408,Kenya,Meru
+409,Congo (Brazzaville),Brazzaville
+410,United States,Orlando
+411,China,Fuxin
+412,China,Wuwei
+413,Brazil,Manaus
+414,India,Bhopāl
+415,United States,San Jose
+416,Poland,Warsaw
+417,Congo (Kinshasa),Lubumbashi
+418,Philippines,Davao
+419,China,Haikou
+420,Syria,Damascus
+421,China,Shuyangzha
+422,Belgium,Brussels
+423,Zambia,Lusaka
+424,Pakistan,Hyderabad City
+425,Hungary,Budapest
+426,China,Shuozhou
+427,United States,Cleveland
+428,China,Benxi
+429,China,Baiyin
+430,United States,Pittsburgh
+431,India,Patna
+432,Iraq,Mosul
+433,Philippines,Caloocan City
+434,United States,Austin
+435,China,Sanzhou
+436,China,Beihai
+437,Saudi Arabia,Mecca
+438,China,Heihe
+439,China,Jingdezhen
+440,Guinea,Conakry
+441,Uganda,Kampala
+442,United States,Cincinnati
+443,Brazil,Recife
+444,China,Yushan
+445,Taiwan,Zhongli
+446,United States,Kansas City
+447,United States,Manhattan
+448,India,Bilāspur
+449,Indonesia,Semarang
+450,India,Ludhiāna
+451,Russia,Novosibirsk
+452,China,Chengtangcun
+453,India,Āgra
+454,Iran,Karaj
+455,China,Wenzhou
+456,United States,Indianapolis
+457,Mexico,León de los Aldama
+458,Mexico,Puebla
+459,India,Kalyān
+460,India,Madurai
+461,Congo (Kinshasa),Mbuji-Mayi
+462,China,Hebi
+463,Iran,Shīrāz
+464,India,Jamshedpur
+465,United States,Columbus
+466,Iran,Tabrīz
+467,Venezuela,Maracaibo
+468,Japan,Kawasaki
+469,Nigeria,Aba
+470,Indonesia,Palembang
+471,China,Zhangjiajie
+472,Japan,Kōbe
+473,United States,Charlotte
+474,China,Changshu
+475,China,Lianjiang
+476,China,Ximeicun
+477,China,Jianguang
+478,China,Yucheng
+479,Brazil,Belém
+480,China,Guiping
+481,China,Leizhou
+482,South Korea,Gwangju
+483,Germany,Munich
+484,India,Nāsik
+485,Brazil,Porto Alegre
+486,Venezuela,Valencia
+487,Nigeria,Onitsha
+488,United Arab Emirates,Abu Dhabi
+489,United States,Virginia Beach
+490,South Korea,Daejeon
+491,Mexico,Zapopan
+492,Russia,Yekaterinburg
+493,China,Huazhou
+494,Japan,Kyōto
+495,China,Shuangyashan
+496,China,Pizhou
+497,Morocco,El Kelaa des Srarhna
+498,Ukraine,Kharkiv
+499,China,Yangshe
+500,China,Guyuan
