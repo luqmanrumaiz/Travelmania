@@ -19,23 +19,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container-xl">
+<div class="container-xl ">
 	<div class="row">
 		<div class="col-8">
 			<div class="row">
 				<div class="col-12">
 					<div class="row">
-						<div class="col align-self-start">
-							<h2>Travelmania</h2>
-							<form action="<?php echo base_url(); ?>index.php/auth/logout" method="get">
-								<button type="submit" class="btn btn-primary">Logout</button>
-							</form>
+						<div class="col align-self-center"">
+								<h2>TRAVELMANIA</h2>
 						</div>
-						<div class="col align-self-end">
+						<div class="col align-self-center"">
 							<form class="form-inline my-2 my-lg-0 float-right">
 								<input class="form-control mr-sm-2 rounded-pill" type="search" name="post-search"
 									   id="post-search" placeholder="Search" aria-label="Search">
-								<button class="btn btn-outline-success my-2 my-sm-0 rounded-pill" type="submit">Search</button>
+								<button class="btn btn-outline-dark my-2 my-sm-0 rounded-pill" type="submit">Search</button>
 							</form>
 						</div>
 					</div>
@@ -43,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<br>
 					<div class="row">
 						<div class="col align-self-start">
-							<h2 class="text-left">Welcome <?php echo $this->session->userdata('user')['username']; ?>! 👋</h2>
+							<h2 class="text-left">Welcome <?php echo $this->session->userdata('user')['username']; ?>  👋</h2>
 							<span>Discover and Explore new places near you!</span>
 						</div>
 						<div class="col align-self-end">
@@ -103,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div class="offcanvas-header">
 					<div class="avatar mx-auto position-relative" style="width: 128px; height: 128px;">
 						<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle">
-						<button type="button" class="btn btn-primary btn-edit btn-sm position-absolute" style="bottom: 0; right: 0; ">
+						<button type="button" id="edit-avatar" class="btn btn-primary btn-edit btn-sm position-absolute" style="bottom: 0; right: 0; ">
 							<i class="fas fa-edit"></i>
 						</button>
 					</div>
@@ -113,10 +110,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					</h5>
 				</div>
 				<div class="offcanvas-body">
-					<div class="d-flex"">
-					<p>Try scrolling the rest of the page to see the option in action.</p>
+					<p>Try scrolling the rest of the page to see the option in action.
+						<button type="button" id="edit-bio" class="btn btn-primary btn-edit btn-sm" style="bottom: 0; right: 0; ">
+							<i class="fas fa-edit"></i>
+						</button>
+					</p>
 					<?php echo $this->session->userdata('user')['userBio']; ?>
+
 				</div>
+				<form action="<?php echo base_url(); ?>index.php/user/logout" method="get">
+					<button type="submit" class="btn btn-warning">Logout</button>
+				</form>
 				<hr>
 				<div>
 					<h5>Recent Posts</h5>
@@ -162,6 +166,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		var id = $(this).data("id");
 		$.ajax({
 			url: "<?php echo base_url(); ?>index.php/Post/deletePost",
+			method: "POST",
+			data: {postId: $(this).attr("data-id")},
+			success: function(data){
+				$("[data-id='card-" + id + "']").remove();
+			}
+		});
+	});
+
+	$(".edit-bio").click(function() {
+		var id = $(this).data("id");
+		$.ajax({
+			url: "<?php echo base_url(); ?>index.php//deletePost",
 			method: "POST",
 			data: {postId: $(this).attr("data-id")},
 			success: function(data){

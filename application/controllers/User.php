@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
 
-class Auth extends RestController
+class User extends RestController
 {
 	public function __construct()
 	{
@@ -59,6 +59,13 @@ class Auth extends RestController
 	{
 		$this->session->sess_destroy();
 		redirect('/');
+	}
+
+	public function bio_put()
+	{
+		$bio = $this->put('bio');
+		$this->User_model->updat($bio);
+		redirect('home');
 	}
 
 	function json_output($statusHeader,$response)

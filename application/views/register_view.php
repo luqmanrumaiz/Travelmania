@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class="card-body">
 								<!-- The register form -->
-								<form action="<?php echo base_url(); ?>index.php/auth/register" method="post">
+								<form action="<?php echo base_url(); ?>index.php/user/register" method="post">
 									<div class="form-group">
 										<label for="username">Username</label>
 										<input type="text" class="form-control" id="username" name="username" placeholder="Username">

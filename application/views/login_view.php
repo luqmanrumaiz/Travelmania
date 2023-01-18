@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<h4>Login</h4>
 							</div>
 							<div class="card-body">
-								<form action="<?php echo base_url(); ?>index.php/auth/login" method="post">
+								<form action="<?php echo base_url(); ?>index.php/user/login" method="post">
 									<div class="form-group">
 										<label for="email">Email address</label>
 										<input type="email" class="form-control" name="email" id="email" placeholder="Enter email">

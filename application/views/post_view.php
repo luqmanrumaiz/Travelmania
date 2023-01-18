@@ -87,6 +87,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div class="row">
 			<div class="col">
 				<h2 class="text-left">Comments</h2>
+				<br>
+				<div class="input-group mb-3">
+					<textarea class="form-control" id="Comment" name="Comment" placeholder="Comment..."></textarea>
+					<button class="btn btn-lg btn-dark rounded">Comment</button>
+				</div>
+				<br>
+				<?php foreach ($comments as $comment) : ?>
+				<?php endforeach; ?>
 			</div>
 		</div>
 	</div>

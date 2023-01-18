@@ -8,6 +8,7 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('Post_model');
+		$this->load->model('Comment_model');
 		$this->load->helper('url');
 	}
 
@@ -45,8 +46,8 @@ class Home extends CI_Controller {
 
 		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
 		{
-			$this->Post_model->setUserId($this->session->userdata('user')['userId']);
-			$posts = $this->Post_model->getMyPosts();
+			$this->Post_model->set_user_id($this->session->userdata('user')['userId']);
+			$posts = $this->Post_model->get_my_posts();
 
 			if(empty($posts))
 			{
@@ -71,10 +72,18 @@ class Home extends CI_Controller {
 	{
 		$this->load->helper('url');
 
-		$post = $this->Post_model->getMyPost($this->uri->segment(2));
-		$data['post'] = json_decode(json_encode($post), true);
+		if ($this->uri->segment(2))
+		{
+			$post = $this->Post_model->get_my_post($this->uri->segment(2));
+			$data['post'] = json_decode(json_encode($post), true);
 
-		$this->load->view('post_view', $data);
+			$data['comments'] = $this->Comment_model->get_comments_by_post_id($this->uri->segment(2));
+
+			$this->load->view('post_view', $data);
+		}
+		else
+		{
+			redirect('home');
+		}
 	}
-
 }

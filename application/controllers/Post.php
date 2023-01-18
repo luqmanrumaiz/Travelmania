@@ -12,14 +12,6 @@ class Post extends RestController
 		$this->load->database();
 		$this->load->model('Post_model');
 		$this->load->helper('url');
-
-		Configuration::instance([
-			'cloud' => [
-				'cloud_name' => 'dbgyl99ls',
-				'api_key' => '831136837899821',
-				'api_secret' => 'nnd-r3ixRaVYtpW4qXcva2JYamI'],
-			'url' => [
-				'secure' => true]]);
 	}
 
 	function create_post()
@@ -46,7 +38,7 @@ class Post extends RestController
 		redirect('/');
 	}
 
-	function likePost_post()
+	function like_post()
 	{
 		$this->Post_model->setPostId($this->post('postId'));
 		$this->Post_model->setIsLiked($this->post('isLiked'));
@@ -55,7 +47,7 @@ class Post extends RestController
 		$this->Post_model->likePost();
 	}
 
-	function deletePost_post()
+	function delete_delete()
 	{
 		$this->Post_model->setPostId($this->post('postId'));
 		$this->Post_model->setUserId($this->session->userdata('user')['userId']);

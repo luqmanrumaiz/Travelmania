@@ -2,15 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Post_model extends CI_Model {
-	private $postId;
-	private $postTitle;
-	private $postDesc;
-	private $postImageFileName;
-	private $postLikes;
-	private $postUploadTime;
-	private $isLiked;
-	private $userId;
-	private $destinationId;
+	private $post_id;
+	private $post_title;
+	private $post_desc;
+	private $post_image_file_name;
+	private $post_likes;
+	private $post_upload_time;
+	private $is_liked;
+	private $user_id;
+	private $destination_id;
 
 
 	public function __construct()
@@ -19,94 +19,94 @@ class Post_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function setPostId($postId)
+	public function set_post_id($post_id)
 	{
-		$this->postId = $postId;
+		$this->post_id = $post_id;
 	}
 
-	public function setPostTitle($postTitle)
+	public function set_post_title($post_title)
 	{
-		$this->postTitle = $postTitle;
+		$this->post_title = $post_title;
 	}
 
-	public function setPostDesc($postDesc)
+	public function set_post_desc($post_desc)
 	{
-		$this->postDesc = $postDesc;
+		$this->post_desc = $post_desc;
 	}
 
-	public function setPostImageFileName($postImageFileName)
+	public function set_post_image_file_name($post_image_file_name)
 	{
-		$this->postImageFileName = $postImageFileName;
+		$this->post_image_file_name = $post_image_file_name;
 	}
 
-	public function setPostLikes($postLikes)
+	public function set_post_likes($post_likes)
 	{
-		$this->postLikes = $postLikes;
+		$this->post_likes = $post_likes;
 	}
 
-	public function setPostUploadTime($postUploadTime)
+	public function set_post_upload_time($post_upload_time)
 	{
-		$this->postUploadTime = $postUploadTime;
+		$this->post_upload_time = $post_upload_time;
 	}
 
-	public function setIsLiked($isLiked)
+	public function set_is_liked($is_liked)
 	{
-		$this->isLiked = $isLiked;
+		$this->is_liked = $is_liked;
 	}
 
-	public function setUserId($userId)
+	public function set_user_id($user_id)
 	{
-		$this->userId = $userId;
+		$this->user_id = $user_id;
 	}
 
-	public function setDestinationId($destinationId)
+	public function set_destination_id($destination_id)
 	{
-		$this->destinationId = $destinationId;
+		$this->destination_id = $destination_id;
 	}
 
-	public function getPostId()
+	public function get_post_id()
 	{
-		return $this->postId;
+		return $this->post_id;
 	}
 
-	public function getPostTitle()
+	public function get_post_title()
 	{
-		return $this->postTitle;
+		return $this->post_title;
 	}
 
-	public function getPostDesc()
+	public function get_post_desc()
 	{
-		return $this->postDesc;
+		return $this->post_desc;
 	}
 
-	public function getPostImageFileName()
+	public function get_post_image_file_name()
 	{
-		return $this->postImageFileName;
+		return $this->post_image_file_name;
 	}
 
-	public function getPostLikes()
+	public function get_post_likes()
 	{
-		return $this->postLikes;
+		return $this->post_likes;
 	}
 
-	public function getPostUploadTime()
+	public function get_post_upload_time()
 	{
-		return $this->postUploadTime;
+		return $this->post_upload_time;
 	}
 
-	public function getIsLiked()
+	public function get_is_liked()
 	{
-		return $this->isLiked;
+		return $this->is_liked;
 	}
 
-	public function getUserId()
+	public function get_user_id()
 	{
-		return $this->userId;
+		return $this->user_id;
 	}
 
-	public function getDestinationId()
+	public function get_destination_id()
 	{
-		return $this->destinationId;
+		return $this->destination_id;
 	}
 
 	public function create()
@@ -114,14 +114,14 @@ class Post_model extends CI_Model {
 		try
 		{
 			if ($this->db->insert('post', array(
-				'postTitle' => $this->getPostTitle(),
-				'postDesc' => $this->getPostDesc(),
-				'postImageFileName' => $this->getPostImageFileName(),
-				'postLikes' => $this->getPostLikes(),
-				'postUploadTime' => $this->getPostUploadTime(),
-				'isLiked' => $this->getIsLiked(),
-				'userId' => $this->getUserId(),
-				'destinationId' => $this->getDestinationId()
+				'postTitle' => $this->post_title,
+				'postDesc' => $this->post_desc,
+				'postImageFileName' => $this->post_image_file_name,
+				'postLikes' => $this->post_likes,
+				'postUploadTime' => $this->post_upload_time,
+				'isLiked' => $this->is_liked,
+				'userId' => $this->user_id
+
 			)))
 			{
 				return True;
@@ -138,14 +138,14 @@ class Post_model extends CI_Model {
 	}
 
 	// this function gets all posts for this user id using helper not query
-	public function getMyPosts()
+	public function get_my_posts()
 	{
 		try
 		{
 			$this->db->select('*');
 			$this->db->from('post');
-			$this->db->where('userId', $this->getUserId());
-			$this->db->order_by('postUploadTime', 'DESC');
+			$this->db->where('userId', $this->get_user_id());
+			$this->db->order_by('postUploadTime');
 			if ($query = $this->db->get())
 			{
 				return $query->result();
@@ -161,13 +161,13 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	public function getMyPost($postId)
+	public function get_my_post($post_id)
 	{
 		try
 		{
 			$this->db->select('*');
 			$this->db->from('post');
-			$this->db->where('postId', $postId);
+			$this->db->where('postId', $post_id);
 			if ($query = $this->db->get())
 			{
 				return $query->row();
@@ -183,11 +183,11 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	public function likePost()
+	public function like_post()
 	{
 		try
 		{
-			if ($this->isLiked == 0)
+			if ($this->is_liked == 0)
 			{
 				$this->db->set('postLikes', 'postLikes+1', FALSE);
 				$this->db->set('isLiked', 1);
@@ -197,7 +197,7 @@ class Post_model extends CI_Model {
 				$this->db->set('postLikes', 'postLikes-1', FALSE);
 				$this->db->set('isLiked', 0);
 			}
-			$this->db->where('postId', $this->getPostId());
+			$this->db->where('postId', $this->get_post_id());
 			if ($this->db->update('post'))
 			{
 				return True;
@@ -213,11 +213,11 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	public function deletePost()
+	public function delete_post()
 	{
 		try
 		{
-			$this->db->where('postId', $this->getPostId());
+			$this->db->where('postId', $this->get_post_id());
 			if ($this->db->delete('post'))
 			{
 				return True;
@@ -231,12 +231,5 @@ class Post_model extends CI_Model {
 		{
 			return False;
 		}
-	}
-
-	public function getPosts()
-	{
-		$query = $this->db->get('post');
-
-		return $query->result_array();
 	}
 }
