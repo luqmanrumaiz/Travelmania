@@ -10,6 +10,7 @@ class Post extends RestController
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('Post_model');
+		$this->load->model('Comment_model');
 		$this->load->helper('url');
 	}
 
@@ -28,8 +29,8 @@ class Post extends RestController
 		$this->Post_model->set_post_likes(0);
 		$this->Post_model->set_post_upload_time(date('Y-m-d H:i'));
 		$this->Post_model->set_is_liked(false);
-		$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
-		$this->Post_model->set_destination_id($this->session->userdata('user')['destination_id']);
+		$this->Post_model->set_user_id($this->session->userdata('user_id'));
+		$this->Post_model->set_destination_id($this->session->userdata('destination_id'));
 
 		$this->Post_model->create();
 
@@ -46,9 +47,17 @@ class Post extends RestController
 
 	function delete_delete()
 	{
-		$this->Post_model->set_post_id($this->delete('post_id'));
-		$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
+		$post_id = $this->uri->segment(3);
 
-		$this->Post_model->delete();
+		if ($this->Comment_model->delete_all_comments($post_id) && $this->Post_model->delete_post($post_id))
+			$this->response([
+				'status' => true,
+				'message' => 'Post deleted successfully'
+			], RestController::HTTP_OK);
+		else
+			$this->response([
+				'status' => false,
+				'message' => 'Post could not be deleted'
+			], RestController::HTTP_BAD_REQUEST);
 	}
 }

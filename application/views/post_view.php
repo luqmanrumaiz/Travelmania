@@ -34,7 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div class="row">
 			<div class="col">
 				<h2 class="text-left">Viewing Post</h2>
-				<span><?php echo $destination['destination_country'] . ', '. $destination['destination_city'] ; ?></span>
+				<span><?php echo $destination['destination_country'] . ', '. $destination['destination_city'] . ' - ' .
+					 $post['post_title']; ; ?></span>
 			</div>
 		</div>
 
@@ -46,8 +47,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<div class="card-body">
 							<div class="col">
 								<div class="row"  style="display: flex; align-items: center; height: 100%;">
-									<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle mr-4" style="width: 32px; height: 32px;">
-									<h5 class="card-title"><?php echo $post['post_title']; ?></h5>
+									<img src="https://ui-avatars.com/api/?size=32&rounded=true&background=343a40&color=fff
+									&name=<?php echo substr($this->session->userdata('username'), 0, 1) ;?>" alt="Avatar"
+									class="mr-4"/>
+									<h5 class="card-title mt-2"><?php echo $this->session->userdata('username'); ?></h5>
 								</div>
 								<br>
 								<p class="card-text"><?php echo $post['post_desc']; ?></p>
@@ -66,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					</div>
 					<div class="middle">
 						<i class="fa-regular fa-comment">
-							<span class="badge badge-dark">0</span>
+							<span class="badge badge-dark"> <?php echo count($comments); ?> </span>
 						</i>
 						</i>
 					</div>
@@ -90,10 +93,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<br>
 				<div class="input-group mb-3">
 					<textarea class="form-control" id="Comment" name="Comment" placeholder="Comment..."></textarea>
-					<button class="btn btn-lg btn-dark rounded">Comment</button>
+					<button class="btn btn-lg btn-dark rounded comment-btn">Comment</button>
 				</div>
 				<br>
 				<?php foreach ($comments as $comment) : ?>
+				<div class="comments-list">
+					<div class="card bg-light">
+						<div class="card-body">
+							<div class="row"  style="display: flex; align-items: center; height: 100%;">
+								<img src="https://ui-avatars.com/api/?size=32&rounded=true&background=343a40&color=fff
+									&name=<?php echo substr($comment['user']['username'], 0, 1) ;?>" alt="Avatar"
+									 class="mr-2 ml-2"/>
+								<h5 class="card-title text-center mt-2"><?php echo $comment['user']['username']; ?></h5>
+								<span class="badge badge-dark ml-2 float-right"><?php echo $comment['comment_upload_time']; ?></span>
+							</div>
+							<br>
+							<p class="card-text"><?php echo $comment['comment_text']; ?></p>
+						</div>
+					</div>
+					<br>
+				</div>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -103,33 +122,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			$(this).toggleClass('fa-solid');
 		});
 
-		//$('.fa-regular').click(function() {
-		//	$.ajax({
-		//		url: '<?php //echo base_url(); ?>//index.php/Post/likePost',
-		//		method: 'POST',
-		//		contentType: 'application/json',
-		//		data: {
-		//			JSON.stringify({
-		//				post_id: <?php //echo $post['post_id']; ?>//,
-		//				is_liked: true
-		//			})
-		//		},
-		//		success: function(data) {
-		//			if (data === 'success')
-		//			{
-		//				$(this).toggleClass('fa-solid');
-		//			}
-		//		}
-		//	});
-		//});
-		//
-
 		$('.fa-solid').click(function() {
 			$(this).toggleClass('fa-regular fa-heart');
 		});
 
 		// ajax call to comment
-		$('')
+		$('.comment-btn').click(function() {
+			$.ajax({
+				url: '<?php echo base_url(); ?>index.php/Comment/comment',
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					post_id: <?php echo $post['post_id']; ?>,
+					user_id: <?php echo $this->session->userdata('user_id'); ?>,
+					comment_text: $('#Comment').val(),
+					comment_upload_time: '<?php echo date('Y-m-d H:i:s'); ?>'
+
+				}),
+				success: function(data) {
+					if (data === 'success')
+					{
+						$('#Comment').val('');
+					}
+				}
+			});
+		});
 
 	</script>
 </body>

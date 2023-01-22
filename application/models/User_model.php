@@ -7,7 +7,6 @@ class User_model extends CI_Model {
 	private $email;
 	private $password;
 	private $user_bio;
-	private $user_avatar_filename;
 	private $destination_id;
 
 
@@ -42,11 +41,6 @@ class User_model extends CI_Model {
 		$this->user_bio = $user_bio;
 	}
 
-	public function set_user_avatar_filename($user_avatar_filename)
-	{
-		$this->user_avatar_filename = $user_avatar_filename;
-	}
-
 	public function set_destination_id($destination_id)
 	{
 		$this->destination_id = $destination_id;
@@ -77,11 +71,6 @@ class User_model extends CI_Model {
 		return $this->user_bio;
 	}
 
-	public function get_user_avatar_filename()
-	{
-		return $this->user_avatar_filename;
-	}
-
 	public function get_destination_id()
 	{
 		return $this->destination_id;
@@ -98,7 +87,8 @@ class User_model extends CI_Model {
 		try
 		{
 			if ($this->db->insert('user', array('user_id' => $user_id, 'username' => $username, 'email' => $email,
-				'password' => $hashed_password, 'destination_id' => 1)))
+				'password' => $hashed_password, 'user_bio' => 'This is your bio, edit it with the buttons below',
+				'destination_id' => 1)))
 			{
 				return $user_id;
 			}
@@ -130,22 +120,54 @@ class User_model extends CI_Model {
 
 			if (password_verify($password, $row->password))
 			{
-				$this->set_user_id($row->user_id);
-				$this->set_username($row->username);
-				$this->set_email($row->email);
-				$this->set_user_bio($row->user_bio);
-				$this->set_user_avatar_filename($row->user_avatar_filename);
-				$this->set_destination_id($row->destination_id);
+				$this->session->set_userdata('user_id', $row->user_id);
+				$this->session->set_userdata('username', $row->username);
+				$this->session->set_userdata('email', $row->email);
+				$this->session->set_userdata('user_bio', $row->user_bio);
+				$this->session->set_userdata('destination_id', $row->destination_id);
 
-				return array('logged_in' => true, 'user' => array('user_id' => $this->get_user_id(),
-					'username' => $this->get_username(), 'email' => $this->get_email(),
-					'user_bio' => $this->get_user_bio(), 'user_avatar_filename' => $this->get_user_avatar_filename(),
-					'destination_id' => $this->get_destination_id()));
+				return array('logged_in' => true);
 			}
 			else
 			{
 				return array('logged_in' => false);
 			}
+		}
+	}
+
+	function get_user($user_id)
+	{
+		$res = $this->db->get_where('user', array('user_id' => $user_id));
+		if ($res->num_rows() < 0)
+		{
+			return array('user_found' => false);
+		}
+		else
+		{
+			$row = $res->row();
+
+			$this->set_user_id($row->user_id);
+			$this->set_username($row->username);
+			$this->set_email($row->email);
+			$this->set_user_bio($row->user_bio);
+
+			return array('user_id' => $this->get_user_id(),
+				'username' => $this->get_username(), 'email' => $this->get_email(),
+				'user_bio' => $this->get_user_bio(), 'destination_id' => $this->get_destination_id());
+		}
+	}
+
+	function update_bio()
+	{
+		$this->db->where('user_id', $this->session->userdata('user_id'));
+		if ($this->db->update('user', array('user_bio' => $this->get_user_bio())))
+		{
+			$this->session->set_userdata('user_bio', $this->get_user_bio());
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 

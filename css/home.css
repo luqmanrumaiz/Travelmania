@@ -1,18 +1,12 @@
-
 .grey-bg
 {
 	background-color: #EEEEEE;
 }
 
-.pink-bg
-{
-	background-color: #f54bff;
-}
-
 .offcanvas
 {
 	border-radius: 40px;
-	height: 100vh;
+	height: 93vh;
 	width: 50vh;
 	padding: 30px;
 }
@@ -45,7 +39,7 @@
 }
 
 .scrollable-section {
-	overflow: scroll;
+	overflow-x: hidden;
 	width: 100%;
 	height: 100%;
 }

@@ -70,7 +70,7 @@ class Comment_model extends CI_Model
 	{
 		try
 		{
-			if ($this->db->insert('post', array(
+			if ($this->db->insert('comment', array(
 				'comment_text' => $this->comment_text,
 				'comment_upload_time' => $this->comment_upload_time,
 				'user_id' => $this->user_id,
@@ -90,14 +90,30 @@ class Comment_model extends CI_Model
 		}
 	}
 
-	public function get_comments_by_post_id()
+	public function get_comments($post_id){
+		try
+		{
+			$this->db->select('comment_id, comment_text, comment_upload_time, user_id, post_id');
+			$this->db->from('comment');
+			$this->db->where('post_id', $post_id);
+			$query = $this->db->get();
+
+			return $query->result();
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
+	public function delete_all_comments($post_id)
 	{
 		try
 		{
-			$query = $this->db->get_where('comment', array(
-				'post_id' => $this->post_id
-			));
-			return $query->result();
+			$this->db->where('post_id', $post_id);
+			$this->db->delete('comment');
+
+			return True;
 		}
 		catch (Exception $e)
 		{

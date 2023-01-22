@@ -136,14 +136,13 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	// this function gets all posts for this user id using helper not query
-	public function get_my_posts()
+	public function get_my_posts($user_id)
 	{
 		try
 		{
 			$this->db->select('*');
 			$this->db->from('post');
-			$this->db->where('user_id', $this->get_user_id());
+			$this->db->where('user_id', $user_id);
 			$this->db->order_by('post_upload_time');
 			if ($query = $this->db->get())
 			{
@@ -212,11 +211,11 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	public function delete_post()
+	public function delete_post($post_id)
 	{
 		try
 		{
-			$this->db->where('post_id', $this->get_post_id());
+			$this->db->where('post_id', $post_id);
 			if ($this->db->delete('post'))
 			{
 				return True;

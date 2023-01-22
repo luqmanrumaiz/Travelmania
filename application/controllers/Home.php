@@ -7,6 +7,7 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->database();
+		$this->load->model('User_model');
 		$this->load->model('Post_model');
 		$this->load->model('Comment_model');
 		$this->load->model('Destination_model');
@@ -47,21 +48,20 @@ class Home extends CI_Controller {
 
 		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
 		{
-			$this->Post_model->set_user_id($this->session->userdata('user')['user_id']);
-			$posts = $this->Post_model->get_my_posts();
+			// Get all posts based on the user's id
+			$posts = $this->Post_model->get_my_posts($this->session->userdata('user_id'));
 
 			if(empty($posts))
 			{
 				$posts = array();
 				$data['posts'] = $posts;
-
-				$this->load->view('home_view', $data);
 			}
 			else
 			{
 				$data['posts'] = json_decode(json_encode($posts), true);
-				$this->load->view('home_view', $data);
 			}
+
+			$this->load->view('home_view', $data);
 		}
 		else
 		{
@@ -73,22 +73,44 @@ class Home extends CI_Controller {
 	{
 		$this->load->helper('url');
 
+		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
+		{
+			// Getting the post id from the url
+			$post_id = $this->uri->segment(2);
 
-			$post = $this->Post_model->get_my_post($this->uri->segment(2));
-			$data['post'] = json_decode(json_encode($post), true);
+			// Getting the post data from the database
+			$post = $this->Post_model->get_my_post($post_id);
 
-			if ($this->Comment_model->get_comments_by_post_id($this->uri->segment(2)))
+			if (empty($post))
 			{
-				$comments = $this->Comment_model->get_comments_by_post_id($this->uri->segment(2));
-				$data['comments'] = json_decode(json_encode($comments), true);
+				$post = array();
+				$data['post'] = $post;
 			}
 			else
 			{
-				$data['comments'] = array();
+				$data['post'] = json_decode(json_encode($post), true);
 			}
 
-			$data['destination'] = json_decode(json_encode($this->Destination_model->get_destination(2)), true);
+			// Getting the comments data from the database
+			$comments = $this->Comment_model->get_comments($post_id);
+
+			if (empty($comments))
+			{
+				$comments = array();
+				$data['comments'] = $comments;
+			}
+			else
+			{
+				foreach ($comments as $comment)
+				{
+					$comment->user = $this->User_model->get_user($comment->user_id);
+				}
+				$data['comments'] = json_decode(json_encode($comments), true);
+			}
+
+			$data['destination'] = json_decode(json_encode($this->Destination_model->get_destination($data['post']['destination_id'])), true);
 
 			$this->load->view('post_view', $data);
+		}
 	}
 }

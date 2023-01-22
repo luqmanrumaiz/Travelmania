@@ -33,13 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<h1 class="display-4">Discover dream places with many other travel maniacs!</h1>
 						<br>
 						<br>
-						<?php if ($this->session->flashdata('registration_success')): ?>
-							<div class="alert alert-success" role="alert">
-								<i class="fas fa-check"></i>
-								&nbsp;
-								<?php echo $this->session->flashdata('registration_success'); ?>
-							</div>
-						<?php endif; ?>
+						<div class="register-success" role="alert">
+						</div>
 					</div>
 				</div>
 				<!-- The login form column -->
@@ -52,24 +47,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class="card-body">
 								<!-- The register form -->
-								<form action="<?php echo base_url(); ?>index.php/user/register" method="post">
+								<form>
 									<div class="form-group">
 										<label for="username">Username</label>
-										<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+										<input type="text" class="form-control" id="username" name="username" required="required" placeholder="Username">
 									</div>
 									<div class="form-group">
 										<label for="email">Email address</label>
-										<input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+										<input type="email" class="form-control" id="email" name="email" required="required" placeholder="Enter email">
 									</div>
 									<div class="form-group">
 										<label for="password">Password</label>
-										<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+										<input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
 									</div>
 									<div class="form-group">
 										<label for="confirm_password">Confirm Password</label>
-										<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+										<input type="password" class="form-control" id="confirm_password" name="confirm_password" required="requried" placeholder="Confirm Password">
 									</div>
-									<button type="submit" class="btn btn-primary">Get started</button>
+									<button type="submit" class="btn btn-primary" id="register-btn">Get started</button>
 								</form>
 							</div>
 						</div>
@@ -84,7 +79,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script>
-		$('#username').bind('input', function() {
+	// Validation for Username
+	$('#username').bind('input', function() {
 		var username = $(this);
 
 		// Username must be 8-20 characters and you must not start or end with _ or .
@@ -97,10 +93,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		{
 			this.setCustomValidity('');
 		}
-
-
 	});
 
+	// Validation for Password
 	$('#password').bind('input', function() {
 		var to_confirm = $(this);
 		var to_equal = $('#confirm_password');
@@ -108,12 +103,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		console.log(to_confirm.val())
 		console.log(to_equal.val())
 
-		if(to_confirm.val() !== to_equal.val())
-			this.setCustomValidity('Password must be equal');
-		else
+		if(to_confirm.val() === to_equal.val())
+		{
 			this.setCustomValidity('');
+			to_equal.get(0).setCustomValidity('');
+		}
+		else
+		{
+			this.setCustomValidity('Password must be equal');
+		}
 	});
 
+	// Validation for Confirm Password
 	$('#confirm_password').bind('input', function() {
 		var to_confirm = $(this);
 		var to_equal = $('#password');
@@ -121,9 +122,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		console.log(to_confirm.val())
 		console.log(to_equal.val())
 
-		if(to_confirm.val() !== to_equal.val())
-			this.setCustomValidity('Password must be equal');
-		else
+		if(to_confirm.val() === to_equal.val())
+		{
 			this.setCustomValidity('');
+			to_equal.get(0).setCustomValidity('');
+		}
+		else
+		{
+			this.setCustomValidity('Password must be equal');
+		}
+	});
+
+	$("#register-btn").on("click", function() {
+		// check if the form is valid
+		if ($("form")[0].checkValidity()) {
+			// if valid, submit the form
+			$.ajax({
+				url: '<?php echo base_url(); ?>index.php/User/register',
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					"username": $("#username").val(),
+					"email": $("#email").val(),
+					"password": $("#password").val()
+				}),
+				success: function(data) {
+					console.log(data)
+					// if (data) {
+					// 	$(".register-success").html("<br><div class='alert alert-success' role='alert'>User created successfully!</div>");
+					// } else {
+					// 	$(".register-success").html("<br><div class='alert alert-danger' role='alert'>User creation failed!</div>");
+					// }
+				}
+			});
+		}
 	});
 </script>

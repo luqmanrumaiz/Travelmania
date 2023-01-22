@@ -13,21 +13,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container-xl ">
+<div class="container-xl">
 	<div class="row">
 		<div class="col-8">
 			<div class="row">
 				<div class="col-12">
-					<div class="row">
-						<div class="col align-self-center"">
-								<h2>TRAVELMANIA</h2>
-						</div>
+					<div class="row mt-4" >
+						<h2>TRAVELMANIA</h2>
 						<div class="col align-self-center"">
 							<form class="form-inline my-2 my-lg-0 float-right">
 								<input class="form-control mr-sm-2 rounded-pill" type="search" name="post-search"
@@ -40,22 +39,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<br>
 					<div class="row">
 						<div class="col align-self-start">
-							<h2 class="text-left">Welcome <?php echo $this->session->userdata('user')['username']; ?>  👋</h2>
+							<h4 class="text-left">Welcome <?php echo $this->session->userdata('username'); ?>  👋</h4>
 							<span>Discover and Explore new places near you!</span>
 						</div>
 						<div class="col align-self-end">
-							<button class="btn btn-lg btn-dark rounded float-right" data-toggle="modal" data-target="#exampleModal">
+							<button class="btn btn-lg btn-dark rounded float-right" data-toggle="modal" data-target="#create-post-modal">
 								Create Post
 							</button>
 
-							<div class="modal" id="exampleModal" role="dialog" aria-hidden="true" tabindex="-1">
+							<div class="modal" id="create-post-modal">
 								<div class="modal-dialog modal-dialog-centered rounded">
 									<div class="modal-content bg-black text-white">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
-											<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+											<h5 class="modal-title">Create Post</h5>
 										</div>
 
 										<form action="<?php echo base_url(); ?>index.php/post/create" method="post" enctype="multipart/form-data">
@@ -95,29 +91,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 ">
-			<div class="offcanvas offcanvas-end grey-bg show position-fixed" style="overflow: scroll">
+		<div class="col-4 mt-4 mb-4">
+			<div class="offcanvas offcanvas-end grey-bg show position-fixed" style="overflow: scroll;  overflow-wrap: break-word;">
 				<div class="offcanvas-header">
 					<div class="avatar mx-auto position-relative" style="width: 128px; height: 128px;">
-						<img src="https://api.dicebear.com/5.x/fun-emoji/svg" alt="Avatar" class="rounded-circle">
-						<button type="button" id="edit-avatar" class="btn btn-primary btn-edit btn-sm position-absolute" style="bottom: 0; right: 0; ">
-							<i class="fas fa-edit"></i>
-						</button>
+						<img src="https://ui-avatars.com/api/?background=343a40&color=fff&name=<?php echo substr($this->session->userdata('username'), 0, 1) ;?>" alt="Avatar"
+							 class="rounded-circle" style="width: 128px; height: 128px;">
 					</div>
 					<br>
 					<h5 class="offcanvas-title" id="offcanvasScrollingLabel">
-						<?php echo $this->session->userdata('user')['username']; ?>
+						<?php echo $this->session->userdata('username'); ?>
 					</h5>
 				</div>
 				<div class="offcanvas-body">
-					<p>Try scrolling the rest of the page to see the option in action.
-						<button type="button" id="edit-bio" class="btn btn-primary btn-edit btn-sm" style="bottom: 0; right: 0; ">
-							<i class="fas fa-edit"></i>
-						</button>
-					</p>
-					<?php echo $this->session->userdata('user')['user_bio']; ?>
-
+					<p id="bio-text"><?php echo $this->session->userdata('user_bio'); ?></p>
+					<button type="button" id="edit-bio" class="btn btn-primary btn-edit btn-sm" style="bottom: 0; right: 0; ">
+						<i class="fas fa-edit"></i>
+					</button>
+					<button type="button" id="save-bio" class="btn btn-primary btn-save btn-sm">Save</button>
+					<div class="sucess-bio-update"></div>
 				</div>
+				<br>
 				<form action="<?php echo base_url(); ?>index.php/user/logout" method="get">
 					<button type="submit" class="btn btn-warning">Logout</button>
 				</form>
@@ -150,6 +144,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 </div>
 
 <script>
+	/* Update placeholder image for create post modal by replacing the src attribute
+	 * with the image file name from the input field
+	 */
 	var uploadInput = document.getElementById("post-img-upload");
 	console.log(uploadInput);
 	var previewImg = document.getElementById("post-img-placeholder");
@@ -162,30 +159,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		};
 		reader.readAsDataURL(file);
 	};
-	//
-	//$(".fa-trash").click(function() {
-	//	var id = $(this).data("id");
-	//	$.ajax({
-	//		url: "<?php //echo base_url(); ?>//index.php/Post/delete,
-	//		method: "DELETE",
-	//		data: {post_id: $(this).attr("data-id")},
-	//		success: function(data){
-	//			$("[data-id='card-" + id + "']").remove();
-	//		}
-	//	});
-	//});
-	//
-	//$(".edit-bio").click(function() {
-	//	var id = $(this).data("id");
-	//	$.ajax({
-	//		url: "<?php //echo base_url(); ?>//index.php//deletePost",
-	//		method: "POST",
-	//		data: {post_id: $(this).attr("data-id")},
-	//		success: function(data){
-	//			$("[data-id='card-" + id + "']").remove();
-	//		}
-	//	});
-	//});
+
+	$(document).ready(function() {
+		$("#edit-bio").on("click", function() {
+			var bioText = $("#bio-text").text();
+			$("#bio-text").html("<input type='text' id='bio-input' value='" + bioText + "'>");
+		});
+	});
+
+	$("#save-bio").on("click", function() {
+		var newBioText = $("#bio-input").val();
+		$("#bio-text").html(newBioText);
+
+		$.ajax({
+			url: '<?php echo base_url(); ?>index.php/User/bio',
+			method: 'PUT',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				user_bio: newBioText
+			}),
+			success: function(data) {
+				if (data) {
+					$(".sucess-bio-update").html("<br><div class='alert alert-success' role='alert'>Bio updated successfully!</div>");
+				} else {
+					$(".sucess-bio-update").html("<br><div class='alert alert-danger' role='alert'>Bio update failed!</div>");
+				}
+			}
+		});
+	});
+
+	$(document).ready(function() {
+		$(".fa-trash").on("click", function() {
+			var post_id = $(this).data("id");
+			$.ajax({
+				url: "<?php echo base_url(); ?>index.php/Post/delete/" + post_id,
+				type: "DELETE",
+				success: function(data) {
+					console.log(data);
+					Swal.fire('Sucessfully deleted Post !')
+
+					$("[data-id='card-" + post_id + "']").remove();
+				}
+			});
+		});
+	});
 </script>
 </body>
 </html>
