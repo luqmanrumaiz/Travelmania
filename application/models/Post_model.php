@@ -198,6 +198,15 @@ class Post_model extends CI_Model {
 			$this->db->where('post_id', $this->get_post_id());
 			if ($this->db->update('post'))
 			{
+				if ($this->is_liked == 0)
+				{
+					$this->set_post_likes($this->get_post_likes() + 1);
+				}
+				else
+				{
+					$this->set_post_likes($this->get_post_likes() - 1);
+				}
+
 				return True;
 			}
 			else

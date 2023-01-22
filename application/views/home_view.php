@@ -81,6 +81,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						</div>
 					</div>
 
+				<?php foreach ($posts as $post) : ?>
+				<div class="card" style="width: 18rem;">
+					<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
+						 class="card-img-top" alt="post-image">
+					<div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+					</div>
+					<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['post_id']; ?>">
+						<a href="post/<?php echo $post['post_id']; ?>">
+							<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
+								 class="card-img-top" alt="post-image">
+						</a>
+						<div class="card-body">
+							<div class="row">
+								<div class="col">
+									<h5 class="card-title"><?php echo $post['post_title'];?></h5>
+								</div>
+								<div class="col">
+									<i class="fa-solid fa-trash float-right p-2" data-id="<?php echo $post['post_id']; ?>"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+
 					<br>
 					<br>
 					<div class="row">

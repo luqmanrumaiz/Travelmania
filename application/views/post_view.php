@@ -118,12 +118,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		</div>
 	</div>
 	<script>
-		$('.fa-regular').click(function() {
-			$(this).toggleClass('fa-solid');
+		$('.fa-regular.fa-heart').click(function() {
+			$.ajax({
+				url: '<?php echo base_url(); ?>index.php/Post/like',
+				method: 'PUT',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					post_id: <?php echo $post['post_id']; ?>,
+					user_id: <?php echo $this->session->userdata('user_id'); ?>,
+					is_liked: false
+				}),
+				success: function(data) {
+					$('.fa-regular.fa-heart').toggleClass('fa-solid');
+					console.log(data)
+					// $('.fa-solid.fa-heart').children('span').text(data.likes);
+				}
+			});
 		});
 
-		$('.fa-solid').click(function() {
-			$(this).toggleClass('fa-regular fa-heart');
+		$('.fa-solid.fa-heart').click(function() {
+			$.ajax({
+				url: '<?php echo base_url(); ?>index.php/Post/like',
+				method: 'PUT',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					post_id: <?php echo $post['post_id']; ?>,
+					user_id: <?php echo $this->session->userdata('user_id'); ?>,
+					is_liked: true
+				}),
+				success: function(data) {
+					$('.fa-solid.fa-heart').toggleClass('fa-regular');
+					console.log(data)
+					// $('.fa-regular.fa-heart').children('span').text(data);
+				}
+			});
 		});
 
 		// ajax call to comment

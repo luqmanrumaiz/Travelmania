@@ -37,12 +37,26 @@ class Post extends RestController
 		redirect('/');
 	}
 
-	function like_post()
+	function like_put()
 	{
-		$this->Post_model->set_post_id($this->post('post_id'));
-		$this->Post_model->set_user_id($this->post('user_id'));
+		$this->Post_model->set_post_id($this->put('post_id'));
+		$this->Post_model->set_user_id($this->put('user_id'));
+		$this->Post_model->set_is_liked($this->put('is_liked'));
 
-		$this->Post_model->like();
+		if ($this->Post_model->like_post())
+
+			$this->response([
+				'status' => true,
+				'message' => 'Post liked successfully',
+				'likes' => $this->Post_model->get_post_likes()
+			], RestController::HTTP_OK);
+
+		else
+
+			$this->response([
+				'status' => false,
+				'message' => 'Post could not be liked'
+			], RestController::HTTP_BAD_REQUEST);
 	}
 
 	function delete_delete()
@@ -50,11 +64,14 @@ class Post extends RestController
 		$post_id = $this->uri->segment(3);
 
 		if ($this->Comment_model->delete_all_comments($post_id) && $this->Post_model->delete_post($post_id))
+
 			$this->response([
 				'status' => true,
 				'message' => 'Post deleted successfully'
 			], RestController::HTTP_OK);
+
 		else
+
 			$this->response([
 				'status' => false,
 				'message' => 'Post could not be deleted'
