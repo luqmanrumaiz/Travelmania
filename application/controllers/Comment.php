@@ -21,6 +21,45 @@ class Comment extends RestController
 		$comment->set_comment_upload_time($this->post('comment_upload_time'));
 		$comment->set_user_id($this->post('user_id'));
 		$comment->set_post_id($this->post('post_id'));
-		$comment->create_comment();
+
+		if ($comment->create_comment())
+		{
+			$this->response([
+				'status' => true,
+				'message' => 'Comment created successfully'
+			], RestController::HTTP_OK);
+		}
+		else
+		{
+			$this->response([
+				'status' => false,
+				'message' => 'Comment creation failed'
+			], RestController::HTTP_BAD_REQUEST);
+		}
+	}
+
+	public function comment_get($post_id)
+	{
+		$comment = new Comment_model();
+		$comment->set_comment_id($this->get('comment_id'));
+
+		// Getting the post id from the url
+		$post_id = $this->uri->segment(3);
+
+		if ($this->Comment_model->get_comments($post_id))
+		{
+			$this->response([
+				'status' => true,
+				'message' => 'Comment retrieved successfully',
+				'comment' => json_encode($this->Comment_model->get_comments($post_id))
+			], RestController::HTTP_OK);
+		}
+		else
+		{
+			$this->response([
+				'status' => false,
+				'message' => 'Comment retrieval failed' . $post_id
+			], RestController::HTTP_BAD_REQUEST);
+		}
 	}
 }

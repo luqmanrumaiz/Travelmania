@@ -49,4 +49,10 @@ class Destination_model extends CI_Model
 		$query = $this->db->get_where('destination', array('destination_id' => $destination_id));
 		return $query->row();
 	}
+
+	public function get_all_destinations()
+	{
+		$query = $this->db->get('destination');
+		return $query->result();
+	}
 }

@@ -12,4 +12,4 @@ $route['home'] = 'home/home';
 $route['post/(:num)'] = 'home/post/$1';
 $route['post/delete/(:num)'] = 'home/post/delete_delete/$1';
 
-
+$route['comment/comment/(:num)'] = 'home/comment/comment_get/$1';

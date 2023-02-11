@@ -48,6 +48,13 @@ class Home extends CI_Controller {
 
 		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
 		{
+			// Get all posts
+			$all_posts = $this->Post_model->get_all_posts();
+
+			// Get popular posts
+			$popular_posts = $this->Post_model->get_popular_posts();
+
+
 			// Get all posts based on the user's id
 			$posts = $this->Post_model->get_my_posts($this->session->userdata('user_id'));
 
@@ -60,6 +67,28 @@ class Home extends CI_Controller {
 			{
 				$data['posts'] = json_decode(json_encode($posts), true);
 			}
+
+			if(empty($all_posts))
+			{
+				$all_posts = array();
+				$data['all_posts'] = $all_posts;
+			}
+			else
+			{
+				$data['all_posts'] = json_decode(json_encode($all_posts), true);
+			}
+
+			if(empty($popular_posts))
+			{
+				$popular_posts = array();
+				$data['popular_posts'] = $popular_posts;
+			}
+			else
+			{
+				$data['popular_posts'] = json_decode(json_encode($popular_posts), true);
+			}
+
+			$data['destinations'] = json_decode(json_encode($this->Destination_model->get_all_destinations()), true);
 
 			$this->load->view('home_view', $data);
 		}
@@ -83,11 +112,11 @@ class Home extends CI_Controller {
 
 			if (empty($post))
 			{
-				$post = array();
-				$data['post'] = $post;
+				redirect('home');
 			}
 			else
 			{
+				$post->user = $this->User_model->get_user($post->user_id);
 				$data['post'] = json_decode(json_encode($post), true);
 			}
 

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Register</title>
+	<title>Travelmania | Register</title>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/register.css">
@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
@@ -33,8 +34,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<h1 class="display-4">Discover dream places with many other travel maniacs!</h1>
 						<br>
 						<br>
-						<div class="register-success" role="alert">
-						</div>
+						<?php if ($this->session->flashdata('registration_success')): ?>
+							<div class="alert alert-success" role="alert">
+								<i class="fas fa-check"></i>
+								&nbsp;
+								<?php echo $this->session->flashdata('registration_success'); ?>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 				<!-- The login form column -->
@@ -47,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class="card-body">
 								<!-- The register form -->
-								<form>
+								<form action="<?php echo base_url(); ?>index.php/user/register" method="post">
 									<div class="form-group">
 										<label for="username">Username</label>
 										<input type="text" class="form-control" id="username" name="username" required="required" placeholder="Username">
@@ -130,31 +136,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		else
 		{
 			this.setCustomValidity('Password must be equal');
-		}
-	});
-
-	$("#register-btn").on("click", function() {
-		// check if the form is valid
-		if ($("form")[0].checkValidity()) {
-			// if valid, submit the form
-			$.ajax({
-				url: '<?php echo base_url(); ?>index.php/User/register',
-				method: 'POST',
-				contentType: 'application/json',
-				data: JSON.stringify({
-					"username": $("#username").val(),
-					"email": $("#email").val(),
-					"password": $("#password").val()
-				}),
-				success: function(data) {
-					console.log(data)
-					// if (data) {
-					// 	$(".register-success").html("<br><div class='alert alert-success' role='alert'>User created successfully!</div>");
-					// } else {
-					// 	$(".register-success").html("<br><div class='alert alert-danger' role='alert'>User creation failed!</div>");
-					// }
-				}
-			});
 		}
 	});
 </script>

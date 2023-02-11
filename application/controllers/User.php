@@ -29,7 +29,7 @@ class User extends RestController
 		else
 		{
 			$this->session->set_flashdata('registration_success', 'Registration successful');
-
+			redirect('login');
 		}
 	}
 
@@ -49,7 +49,7 @@ class User extends RestController
 		else
 		{
 			// Login failed, display an error message
-			$this->session->set_flashdata('registration_success', 'Login failed');
+			$this->session->set_flashdata('registration_fail', 'Login failed');
 			redirect('login');
 		}
 	}

@@ -14,6 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +34,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							<form class="form-inline my-2 my-lg-0 float-right">
 								<input class="form-control mr-sm-2 rounded-pill" type="search" name="post-search"
 									   id="post-search" placeholder="Search" aria-label="Search">
-								<button class="btn btn-outline-dark my-2 my-sm-0 rounded-pill" type="submit">Search</button>
 							</form>
 						</div>
 					</div>
@@ -67,6 +69,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 														<input type="text" class="form-control" id="title" name="title" placeholder="Post Title">
 														<br>
 														<textarea class="form-control" id="description" name="description" placeholder="Post Description"></textarea>
+														<br>
+														<div class="form-group">
+															<select class="form-control dropdown" id="destination" name="destination">
+																<?php foreach ($destinations as $destination): ?>
+																	<option value="<?php echo $destination['destination_id']; ?>"><?php echo $destination['destination_country'] . ', ' . $destination['destination_city']; ?></option>
+																<?php endforeach; ?>
+															</select>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -80,38 +90,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							</div>
 						</div>
 					</div>
-
-				<?php foreach ($posts as $post) : ?>
-				<div class="card" style="width: 18rem;">
-					<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
-						 class="card-img-top" alt="post-image">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['post_id']; ?>">
-						<a href="post/<?php echo $post['post_id']; ?>">
-							<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
-								 class="card-img-top" alt="post-image">
-						</a>
-						<div class="card-body">
-							<div class="row">
-								<div class="col">
-									<h5 class="card-title"><?php echo $post['post_title'];?></h5>
-								</div>
-								<div class="col">
-									<i class="fa-solid fa-trash float-right p-2" data-id="<?php echo $post['post_id']; ?>"></i>
-								</div>
-							</div>
-						</div>
-					</div>
-				<?php endforeach; ?>
-
 					<br>
 					<br>
 					<div class="row">
 						<div class="col align-self-start">
-							<h2>Recently Added</h2>
+							<ul class="nav nav-tabs">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#tab1">
+										<h5>Recently Added</h5>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#tab2">
+										<h5>Popular Destinations</h5>
+									</a>
+								</li>
+							</ul>
+
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab1">
+									<br>
+									<div class="card-deck">
+										<?php foreach ($all_posts as $post) : ?>
+											<div class="card" data-id="card-<?php echo $post['post_id'] ;?>">
+												<a href="post/<?php echo $post['post_id']; ?>">
+													<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
+														 class="card-img-top" alt="post-image">
+												</a>
+												<div class="card-body">
+													<h5 class="card-title"><?php echo $post['post_title'];?></h5>
+												</div>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab2">
+									<br>
+									<div class="card-deck">
+										<?php foreach ($popular_posts as $post) : ?>
+											<div class="card" data-id="card-<?php echo $post['post_id'] ;?>">
+												<a href="post/<?php echo $post['post_id']; ?>">
+													<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
+														 class="card-img-top" alt="post-image">
+												</a>
+												<div class="card-body">
+													<h5 class="card-title"><?php echo $post['post_title'];?></h5>
+												</div>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -143,9 +172,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</form>
 				<hr>
 				<div>
-					<h5>Recent Posts</h5>
+					<h5>My Posts</h5>
 					<?php foreach ($posts as $post) : ?>
-						<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="card-<?php echo $post['post_id']; ?>">
+						<div class="card text-white bg-dark mb-3 rounded mt-3" data-id="my-card-<?php echo $post['post_id']; ?>">
 							<a href="post/<?php echo $post['post_id']; ?>">
 								<img src="<?php echo base_url(); ?>uploads/posts/<?php echo $post['post_image_filename']; ?>"
 									 class="card-img-top" alt="post-image">
@@ -170,6 +199,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 </div>
 
 <script>
+	// generate backbone js model for posts
+	var Post = Backbone.Model.extend({
+		defaults: {
+			post_id: '',
+			post_title: '',
+			post_image_filename: '',
+			post_description: '',
+			post_created_at: '',
+			post_updated_at: '',
+			post_user_id: '',
+			post_likes: '',
+			post_comments: '',
+			post_is_near_user: '',
+			post_user_username: '',
+			post_user_bio: '',
+			post_user_profile_image: '',
+		}
+	});
+
+	// generate backbone js collection for posts
+	var Posts = Backbone.Collection.extend({
+		model: Post,
+		url: "<?php echo base_url(); ?>index.php/api/posts"
+	});
+
+	// generate backbone js view for posts
+
 	/* Update placeholder image for create post modal by replacing the src attribute
 	 * with the image file name from the input field
 	 */
@@ -224,9 +280,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					console.log(data);
 					Swal.fire('Sucessfully deleted Post !')
 
+					$("[data-id='my-card-" + post_id + "']").remove();
 					$("[data-id='card-" + post_id + "']").remove();
+
 				}
 			});
+		});
+	});
+
+	const searchInput = document.querySelector("#post-search")
+
+	searchInput.addEventListener("input", e => {
+		var search = $('#post-search').val();
+		$posts = <?= json_encode($posts); ?>;
+		$.each($posts, function(index, post) {
+			if (post.post_title.toLowerCase().includes(search.toLowerCase())) {
+				$("[data-id='card-" + post.post_id + "']").show();
+			} else {
+				$("[data-id='card-" + post.post_id + "']").hide();
+			}
 		});
 	});
 </script>

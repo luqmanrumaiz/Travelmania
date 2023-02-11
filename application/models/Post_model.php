@@ -7,8 +7,8 @@ class Post_model extends CI_Model {
 	private $post_desc;
 	private $post_image_filename;
 	private $post_likes;
+	private $like_user_ids;
 	private $post_upload_time;
-	private $is_liked;
 	private $user_id;
 	private $destination_id;
 
@@ -44,14 +44,14 @@ class Post_model extends CI_Model {
 		$this->post_likes = $post_likes;
 	}
 
+	public function set_like_user_ids($like_user_ids)
+	{
+		$this->like_user_ids = $like_user_ids;
+	}
+
 	public function set_post_upload_time($post_upload_time)
 	{
 		$this->post_upload_time = $post_upload_time;
-	}
-
-	public function set_is_liked($is_liked)
-	{
-		$this->is_liked = $is_liked;
 	}
 
 	public function set_user_id($user_id)
@@ -89,14 +89,14 @@ class Post_model extends CI_Model {
 		return $this->post_likes;
 	}
 
+	public function get_like_user_ids()
+	{
+		return $this->like_user_ids;
+	}
+
 	public function get_post_upload_time()
 	{
 		return $this->post_upload_time;
-	}
-
-	public function get_is_liked()
-	{
-		return $this->is_liked;
 	}
 
 	public function get_user_id()
@@ -117,13 +117,59 @@ class Post_model extends CI_Model {
 				'post_title' => $this->get_post_title(),
 				'post_desc' => $this->get_post_desc(),
 				'post_image_filename' => $this->get_post_image_filename(),
-				'post_likes' => $this->get_post_likes(),
+				'post_likes' => 0,
+				'like_user_ids' => json_encode([]),
 				'post_upload_time' => $this->get_post_upload_time(),
 				'user_id' => $this->get_user_id(),
 				'destination_id' => $this->get_destination_id()
 			)))
 			{
 				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
+	public function get_all_posts()
+	{
+		try
+		{
+			$this->db->select('*');
+			$this->db->from('post');
+			$this->db->order_by('post_upload_time');
+			if ($query = $this->db->get())
+			{
+				return $query->result();
+			}
+			else
+			{
+				return False;
+			}
+		}
+		catch (Exception $e)
+		{
+			return False;
+		}
+	}
+
+	public function get_popular_posts()
+	{
+		try
+		{
+			$this->db->select('*');
+			$this->db->from('post');
+			$this->db->order_by('post_likes', 'DESC');
+
+			if ($query = $this->db->get())
+			{
+				return $query->result();
 			}
 			else
 			{
@@ -181,26 +227,36 @@ class Post_model extends CI_Model {
 		}
 	}
 
-	public function like_post()
+	public function like_post($is_liked)
 	{
 		try
 		{
-			if ($this->is_liked == 0)
+			if (! $is_liked)
 			{
 				$this->db->set('post_likes', 'post_likes+1', FALSE);
-				$this->db->set('is_liked', 1);
+				// add user_id to like_user_ids
+				$like_user_ids = $this->get_like_user_ids();
+				array_push($like_user_ids, $this->user_id);
+
+				$this->db->set('like_user_ids', json_encode($like_user_ids));
 			}
 			else
 			{
 				$this->db->set('post_likes', 'post_likes-1', FALSE);
-				$this->db->set('is_liked', 0);
+				// remove user_id from like_user_ids
+				$like_user_ids = $this->get_like_user_ids();
+				$like_user_ids = array_diff($like_user_ids, array($this->user_id));
+
+				$this->db->set('like_user_ids', json_encode($like_user_ids));
 			}
 			$this->db->where('post_id', $this->get_post_id());
 			if ($this->db->update('post'))
 			{
-				if ($this->is_liked == 0)
+				if (! $is_liked)
 				{
 					$this->set_post_likes($this->get_post_likes() + 1);
+					$like_user_ids = $this->get_like_user_ids();
+					$this->set_like_user_ids(array_push($like_user_ids, $this->user_id));
 				}
 				else
 				{

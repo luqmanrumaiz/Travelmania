@@ -26,11 +26,9 @@ class Post extends RestController
 		$this->Post_model->set_post_title($this->post('title'));
 		$this->Post_model->set_post_desc($this->post('description'));
 		$this->Post_model->set_post_image_filename($img_name);
-		$this->Post_model->set_post_likes(0);
 		$this->Post_model->set_post_upload_time(date('Y-m-d H:i'));
-		$this->Post_model->set_is_liked(false);
 		$this->Post_model->set_user_id($this->session->userdata('user_id'));
-		$this->Post_model->set_destination_id($this->session->userdata('destination_id'));
+		$this->Post_model->set_destination_id($this->post('destination'));
 
 		$this->Post_model->create();
 
@@ -41,9 +39,10 @@ class Post extends RestController
 	{
 		$this->Post_model->set_post_id($this->put('post_id'));
 		$this->Post_model->set_user_id($this->put('user_id'));
-		$this->Post_model->set_is_liked($this->put('is_liked'));
+		$this->Post_model->set_post_likes($this->put('post_likes'));
+		$this->Post_model->set_like_user_ids($this->put('like_user_ids'));
 
-		if ($this->Post_model->like_post())
+		if ($this->Post_model->like_post($this->put('is_liked')))
 
 			$this->response([
 				'status' => true,
